@@ -1,1 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+  /* Define font */
+  font-family: 'Poppins', sans-serif;
+
+  /* Define Pokemon colors */
+  --rock-color: #B69E31;
+  --ghost-color: #70559b;
+  --steel-color: #b7b9d0;
+  --water-color: #6493eb;
+  --grass-color: #74cb48;
+  --psychic-color: #fb5584;
+  --ice-color: #9ad6df;
+  --dark-color: #75574c;
+  --fairy-color: #e69eac;
+  --normal-color: #aaa67f;
+  --fighting-color: #c12239;
+  --flying-color: #a891ec;
+  --poison-color: #a43e9e;
+  --ground-color: #dec16b;
+  --bug-color: #a7b723;
+  --fire-color: #f57d31;
+  --electric-color: #f9cf30;
+  --dragon-color: #7037ff;
+}
+
