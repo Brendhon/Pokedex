@@ -1,7 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 * {
-  /* Define font */
-  font-family: 'Poppins', sans-serif;
+  /* Define default styles */
+  box-sizing: border-box;
+  padding: 0px;
+  margin: 0px;
+  font-family: 'Poppins', sans-serif; /* Define font */
 
   /* Define Pokemon colors */
   --rock-color: #B69E31;

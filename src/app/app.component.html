@@ -1,3 +1,13 @@
-<div style="background-color: var(--water-color); ">
-  Helloo
-</div>
+<main>
+  <header>
+    <div>
+      <img src="assets/icons/pokeball.svg" alt="Pokebola" width="30">
+      <span>#<img src="assets/icons/bottom-arrow.svg" alt=""></span>
+    </div>
+    <input [formControl]="search" type="text">
+  </header>
+
+  <aside>
+    <app-card *ngFor="let pokemon of filteredPokemons" [pokemon]="pokemon"></app-card>
+  </aside>
+</main>
