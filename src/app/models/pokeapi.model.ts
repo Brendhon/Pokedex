@@ -20,6 +20,7 @@ export interface Pokemon {
   img: string;
   description: string;
   status: Status;
+  colors: string[];
 }
 
 export interface Status {

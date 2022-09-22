@@ -7,7 +7,7 @@
     <input [formControl]="search" type="text">
   </header>
 
-  <aside>
+  <section class="grid">
     <app-card *ngFor="let pokemon of filteredPokemons" [pokemon]="pokemon"></app-card>
-  </aside>
+  </section>
 </main>

@@ -78,7 +78,28 @@ export class PokeapiService {
       types: this.getPokemonTypes(data),
       moves: this.getPokemonMoves(data),
       status: this.getPokemonStatus(data),
+      colors: this.getPokemonColors(data),
     }
+  }
+
+  /**
+   * Get pokemon colors
+   * @param {any} data Search result
+   * @returns {string[]} Colors
+   */
+  private getPokemonColors(data: any): string[] {
+    // Initiate variables
+    const colors: string[] = []
+    const types = this.getPokemonTypes(data);
+
+    // For each type get current color
+    types.forEach(type => {
+      const color = getComputedStyle(document.documentElement).getPropertyValue(`--${type}-color`);
+      colors.push(color.trim());
+    })
+
+    // Return colors
+    return colors;
   }
 
   /**
