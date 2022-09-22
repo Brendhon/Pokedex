@@ -1,3 +1,5 @@
-<div>
-  {{pokemon.name}}
+<div [id]="getCardId()" class="card-container">
+  <header>{{formatPokemonNumber()}}</header>
+  <img [src]="pokemon.img" [alt]="pokemon.name">
+  <h2>{{pokemon.name}}</h2>
 </div>

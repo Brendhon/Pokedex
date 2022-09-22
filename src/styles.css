@@ -25,5 +25,8 @@
   --fire-color: #f57d31;
   --electric-color: #f9cf30;
   --dragon-color: #7037ff;
+
+  /* Define card properties */
+  --card-width: 200px;
 }
 
