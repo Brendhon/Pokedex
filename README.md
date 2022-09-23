@@ -1,27 +1,70 @@
-# Pokedex
+<h1 align="center">Pokédex</h1>
+<h1 align="center">
+    <img align="center" src="src\assets\icons\pokeball.svg" width="100px;" alt="Pokeball"/>
+</h1>
+<h3 align="center">✅ Concluído ✅</h3>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.0.
+## ❓ Sobre o projeto
 
-## Development server
+Pokédex desenvolvida com base na primeira geração. Foi utilizado a API do **[PokeApi](https://pokeapi.co/)** para a coleta de dados.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+---
 
-## Code scaffolding
+## 💻 Tecnologias
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+As seguintes tecnologias foram utilizadas na construção do projeto:
 
-## Build
+ - **[Angular](https://angular.io/)**
+ - **[PokeApi](https://pokeapi.co/)**
+ - **[Google Fonts](https://fonts.google.com/)**
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+> Veja o arquivo  **[package.json](https://github.com/Brendhon/Pokedex/blob/main/package.json)**
 
-## Running unit tests
+### Utilitários
+- Editor:  **[Visual Studio Code](https://code.visualstudio.com/)**
+- Layout:  **[Figma](https://www.figma.com/file/QtUo2ZlTm2lmurqegmN8lI/Pok%C3%A9dex-(Community)?node-id=346%3A11868)**
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+---
+## ⚙️ Como executar o projeto
 
-## Running end-to-end tests
+### 💡 Pré-requisitos
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
+**[Git](https://git-scm.com)** e **[Node.js](https://nodejs.org/en/)**.<br> 
 
-## Further help
+```bash
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+# Clone este repositório
+$ git clone https://github.com/Brendhon/Pokedex.git
+
+# Acesse a pasta do projeto
+
+# Instale as dependências
+$ npm install
+
+```
+### ⚽ Rodando no modo desenvolvedor
+
+```bash
+
+# Execute a aplicação
+$ npm run start
+
+# Iniciará na porta:4200
+
+```
+
+---
+
+## 👥 Autor
+<img style="border-radius: 20%;" src="https://avatars.githubusercontent.com/u/52840078?v=4" width="120px;" alt="120px"/><br>
+**Brendhon Moreira**
+
+[![Linkedin Badge](https://img.shields.io/badge/-Brendhon-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/brendhon-moreira)](https://www.linkedin.com/in/brendhon-moreira)
+[![Gmail Badge](https://img.shields.io/badge/-brendhon.e.c.m@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:brendhon.e.c.m@gmail.com)](mailto:brendhon.e.c.m@gmail.com)
+
+---
+## 📝 License
+[![License](https://img.shields.io/apm/l/vim-mode?color=blue)](http://badges.mit-license.org)
+
+- **[MIT license](https://choosealicense.com/licenses/mit/)**

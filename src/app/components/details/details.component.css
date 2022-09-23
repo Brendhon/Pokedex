@@ -178,7 +178,7 @@ h2 {
 
 /* START Status */
 .pokemon-status {
-  --section-color: var(--secondary-color);
+  --section-color: var(--primary-color);
   display: flex;
   flex-direction: column;
   align-items: center;
