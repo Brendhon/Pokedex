@@ -1,3 +1,97 @@
-h2 {
+main {
+  /* Define primary color */
+  --primary-color: black;
+  --secondary-color: black;
+
+  /* Define header height */
+  --header-height: 250px;
+
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+
+  height: 100%;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  color: white;
+  padding: 10px 20px;
+  height: var(--header-height);
+  z-index: -1;
+}
+
+header:before {
+  content: " ";
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-top: 20px;
+  margin-right: 20px;
+  width: 300px;
+  height: 305px;
+  opacity: 0.1;
+  background-image: url("/assets/icons/pokeball-white.svg");
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  background-size: cover;
+}
+
+header span {
+  font-size: smaller;
+}
+
+header img {
+  cursor: pointer;
+}
+
+.pokemon-container {
+  height: calc(100% - var(--header-height));
+  background-color: var(--white-color);
+  border-radius: 8px;
+}
+
+.pokemon-photo {
+  display: flex;
+  justify-content: center;
+}
+
+.pokemon-photo img {
+  justify-content: center;
+  position: absolute;
+  width: 350px;
+  text-align: center;
+  margin: auto;
+  margin-top: calc(40px - var(--header-height));
+}
+
+.pokemon-name {
   text-transform: capitalize;
 }
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px;
+  margin-top: -40px;
+}
+
+.actions img {
+  width: 10px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.actions img:first-child {
+  /* Rotate 180 degrees along the y-axis */
+  transform: rotateY(180deg);
+}
+
+.actions img:active {
+  opacity: 0.7;
+}
+

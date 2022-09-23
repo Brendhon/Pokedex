@@ -37,6 +37,7 @@ export class AppComponent implements OnInit {
       .then(value => {
         this.pokemons = value;
         this.filteredPokemons = this.pokemons;
+        this.selectedPokemon = value[0];
       })
   }
 
@@ -100,6 +101,9 @@ export class AppComponent implements OnInit {
         break;
       case pokemonId! == 0:
         this.selectedPokemon = this.pokemons.find(value => value.id == this.limit);
+        break;
+      default:
+        this.selectedPokemon = this.pokemons.find(value => value.id == pokemonId)
         break;
     }
   }

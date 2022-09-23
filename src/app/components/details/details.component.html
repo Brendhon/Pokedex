@@ -1,5 +1,17 @@
-<header>
-  <img src="assets/icons/left-arrow.svg" alt="Go back" (click)="clearSelection()">
-  <h2>{{pokemon.name}}</h2>
-  <span>{{pokemon.number}}</span>
-</header>
+<main id="pokemonDetails">
+  <header>
+    <img src="assets/icons/left-arrow-white.svg" alt="Go back" (click)="clearSelection()">
+    <h2 class="pokemon-name">{{pokemon.name}}</h2>
+    <span>{{pokemon.number}}</span>
+  </header>
+
+  <section class="pokemon-container">
+    <div class="pokemon-photo">
+      <img [src]="pokemon.img" [alt]="pokemon.name">
+    </div>
+    <div class="actions">
+      <img src="assets/icons/arrow.svg" alt="left arrow" (click)="previous()">
+      <img src="assets/icons/arrow.svg" alt="right arrow" (click)="next()">
+    </div>
+  </section>
+</main>
