@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   public isListEmpty = false;
   public listOrder: LIST_ORDER_OPTIONS = LIST_ORDER_OPTIONS.NORMAL;
   public listOrderOptions = LIST_ORDER_OPTIONS;
+  public selectedPokemon: Pokemon | undefined;
 
   constructor(private pokeapiService: PokeapiService) { }
 
@@ -72,8 +73,16 @@ export class AppComponent implements OnInit {
 
       default:
         this.listOrder = LIST_ORDER_OPTIONS.NORMAL;
-        this.filteredPokemons = this.filteredPokemons.sort((a, b) => a.number - b.number);
+        this.filteredPokemons = this.filteredPokemons.sort((a, b) => a.id - b.id);
         break;
     }
+  }
+
+  /**
+   * Select a pokemon
+   * @param {Pokemon} pokemon Selected pokemon
+   */
+  public selectPokemon(pokemon: Pokemon) {
+    this.selectedPokemon = pokemon;
   }
 }

@@ -2,6 +2,7 @@ import { Input } from '@angular/core';
 import { AfterViewInit } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { Pokemon } from 'src/app/models';
+import { PokeapiService } from 'src/app/services/pokeapi/pokeapi.service';
 
 @Component({
   selector: 'app-card',
@@ -11,7 +12,7 @@ import { Pokemon } from 'src/app/models';
 export class CardComponent implements OnInit, AfterViewInit {
   @Input() pokemon!: Pokemon;
 
-  constructor() { }
+  constructor(private pokeapiService: PokeapiService) { }
 
   ngOnInit(): void { }
 
@@ -25,22 +26,6 @@ export class CardComponent implements OnInit, AfterViewInit {
    */
   public getCardId(): string {
     return 'card-' + this.pokemon.name;
-  }
-
-  /**
-   * Format Pokemon Number
-   * @returns {string} Pokemon number
-   */
-  public formatPokemonNumber(): string {
-    const number = `${this.pokemon.number}`;
-    switch (number.length) {
-      case 1:
-        return `#00${number}`;
-      case 2:
-        return `#0${number}`;
-      default:
-        return `#${number}`;
-    }
   }
 
   /**

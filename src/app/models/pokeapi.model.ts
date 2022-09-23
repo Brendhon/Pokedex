@@ -11,7 +11,8 @@ export interface Results {
 }
 
 export interface Pokemon {
-  number: number;
+  id: number;
+  number: string;
   name: string;
   types: string[];
   weight: number;

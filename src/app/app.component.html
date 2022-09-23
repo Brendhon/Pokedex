@@ -1,30 +1,44 @@
 <main>
-  <header>
-    <div>
-      <span class="flex">
-        <img src="assets/icons/pokeball.svg" alt="Pokebola" width="50">
-        <h1>Pokédex</h1>
-      </span>
-      <span class="flex" style="cursor: pointer;" (click)="toggleListOrder()">
-        <container-element [ngSwitch]="listOrder">
-          <div *ngSwitchCase="listOrderOptions.NORMAL">
-            <img src="assets/icons/normal-order.svg" alt="bottom-arrow" width="35">
-          </div>
-          <div *ngSwitchCase="listOrderOptions.ASC">
-            <img src="assets/icons/asc-order.svg" alt="bottom-arrow" width="35">
-          </div>
-        </container-element>
-      </span>
+
+  <div style="width: 100%;">
+
+    <!-- Header -->
+    <header>
+      <div>
+        <span class="flex">
+          <img src="assets/icons/pokeball.svg" alt="Pokebola" width="50">
+          <h1>Pokédex</h1>
+        </span>
+        <span class="flex" style="cursor: pointer;" (click)="toggleListOrder()">
+          <container-element [ngSwitch]="listOrder">
+            <div *ngSwitchCase="listOrderOptions.NORMAL">
+              <img src="assets/icons/normal-order.svg" alt="bottom-arrow" width="35">
+            </div>
+            <div *ngSwitchCase="listOrderOptions.ASC">
+              <img src="assets/icons/asc-order.svg" alt="bottom-arrow" width="35">
+            </div>
+          </container-element>
+        </span>
+      </div>
+      <input [formControl]="search" type="text" placeholder="Pesquisar">
+    </header>
+
+    <!-- Card list -->
+    <section class="grid" [class.has-selected-pokemon]="selectedPokemon">
+      <app-card *ngFor="let pokemon of filteredPokemons" [pokemon]="pokemon" (click)="selectPokemon(pokemon)">
+      </app-card>
+    </section>
+
+    <!-- Empty list feedback -->
+    <div class="empty-list" *ngIf="isListEmpty">
+      <img src="assets/imgs/sad.svg" alt="Empty list" width="300">
+      <h2>Nenhum Pokémon da primeira geração foi encontrado.</h2>
     </div>
-    <input [formControl]="search" type="text" placeholder="Pesquisar nome">
-  </header>
 
-  <section class="grid">
-    <app-card *ngFor="let pokemon of filteredPokemons" [pokemon]="pokemon"></app-card>
-  </section>
-  <div class="empty-list" *ngIf="isListEmpty">
-    <img src="assets/imgs/sad.svg" alt="Empty list" width="300">
-    <h2>Nenhum Pokémon da primeira geração foi encontrado.</h2>
   </div>
-</main>
 
+  <aside *ngIf="selectedPokemon">
+    <app-details [pokemon]="selectedPokemon"></app-details>
+  </aside>
+
+</main>

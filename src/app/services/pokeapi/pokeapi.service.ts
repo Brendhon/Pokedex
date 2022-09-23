@@ -69,12 +69,13 @@ export class PokeapiService {
    */
   private getPokemonData(data: any): Pokemon {
     return {
-      number: data.id,
+      id: data.id,
       name: data.name,
       description: '',
       height: data.height,
       weight: data.weight,
       img: data.sprites.other["official-artwork"].front_default,
+      number: this.getPokemonNumber(data),
       types: this.getPokemonTypes(data),
       moves: this.getPokemonMoves(data),
       status: this.getPokemonStatus(data),
@@ -143,6 +144,23 @@ export class PokeapiService {
       sdef: data.stats[4].base_stat,
       spd: data.stats[5].base_stat,
     };
+  }
+
+  /**
+   * Get pokemon number
+   * @param {any} data Search result
+   * @returns {string} number
+   */
+   public getPokemonNumber(data: any): string {
+    const number = `${data.id}`;
+    switch (number.length) {
+      case 1:
+        return `#00${number}`;
+      case 2:
+        return `#0${number}`;
+      default:
+        return `#${number}`;
+    }
   }
 
 }
