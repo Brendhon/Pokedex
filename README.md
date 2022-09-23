@@ -1,6 +1,6 @@
 <h1 align="center">Pokédex</h1>
 <h1 align="center">
-    <img align="center" src="src\assets\icons\pokeball.svg" width="100px;" alt="Pokeball"/>
+    <img align="center" src="src\assets\imgs\pokeball-logo.svg" width="100px;" alt="Pokeball"/>
 </h1>
 <h3 align="center">✅ Concluído ✅</h3>
 
