@@ -14,6 +14,8 @@ export class AppComponent implements OnInit {
   public pokemons: Pokemon[] = []; // List with all Pokemons
   public filteredPokemons: Pokemon[] = [] // List with filtered Pokemons
   public limit = 151; // Limit of pokemons
+  public isListEmpty = false;
+  public isListReversed = false;
 
   constructor(private pokeapiService: PokeapiService) { }
 
@@ -42,12 +44,26 @@ export class AppComponent implements OnInit {
     this.search
       .valueChanges
       .subscribe(value => {
+        // Get term search
         const searchTerm = value?.trim().toLowerCase() ?? '';
-        const hasValue = !!searchTerm;
+        const hasValue = !!searchTerm; // Check if exist text
+
+        // Update pokemon list
         this.filteredPokemons = hasValue
           ? this.pokemons.filter(pokemon => pokemon.name.toLowerCase().includes(searchTerm))
           : this.pokemons;
+
+        // Check if list is empty
+        this.isListEmpty = this.filteredPokemons.length === 0;
       })
+  }
+
+  /**
+   * Toggle List Order
+   */
+  public toggleListOrder() {
+    this.isListReversed = !this.isListReversed;
+    this.filteredPokemons = this.filteredPokemons.reverse();
   }
 
 }

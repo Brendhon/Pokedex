@@ -16,7 +16,7 @@ export class CardComponent implements OnInit, AfterViewInit {
   ngOnInit(): void { }
 
   ngAfterViewInit(): void {
-    this.setPrimaryColor();
+    this.setCardColors();
   }
 
   /**
@@ -46,7 +46,7 @@ export class CardComponent implements OnInit, AfterViewInit {
   /**
    * Set primary color
    */
-  public setPrimaryColor(): void {
+  public setCardColors(): void {
     // Get pokemon colors
     const primary = this.pokemon.colors[0];
     const secondary = this.pokemon.colors[1];

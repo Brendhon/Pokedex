@@ -1,13 +1,22 @@
 <main>
   <header>
     <div>
-      <img src="assets/icons/pokeball.svg" alt="Pokebola" width="30">
-      <span>#<img src="assets/icons/bottom-arrow.svg" alt=""></span>
+      <span class="flex">
+        <img src="assets/icons/pokeball.svg" alt="Pokebola" width="50">
+        <h1>Pokédex</h1>
+      </span>
+      <span class="flex" style="cursor: pointer;" (click)="toggleListOrder()">
+        #<img src="assets/icons/bottom-arrow.svg" alt="bottom-arrow" width="16" [class.img-vert]="isListReversed">
+      </span>
     </div>
-    <input [formControl]="search" type="text">
+    <input [formControl]="search" type="text" placeholder="Pesquisar nome">
   </header>
 
   <section class="grid">
     <app-card *ngFor="let pokemon of filteredPokemons" [pokemon]="pokemon"></app-card>
   </section>
+  <div class="empty-list" *ngIf="isListEmpty">
+    <img src="assets/imgs/sad.svg" alt="Empty list" width="300">
+    <h2>Nenhum Pokémon da primeira geração foi encontrado.</h2>
+  </div>
 </main>

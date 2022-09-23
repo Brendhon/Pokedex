@@ -1,13 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  background-color: var(--background-color);
+}
+
 * {
   /* Define default styles */
   box-sizing: border-box;
   padding: 0px;
   margin: 0px;
-  font-family: 'Poppins', sans-serif; /* Define font */
+  font-family: "Poppins", sans-serif; /* Define font */
 
   /* Define Pokemon colors */
-  --rock-color: #B69E31;
+  --rock-color: #b69e31;
   --ghost-color: #70559b;
   --steel-color: #b7b9d0;
   --water-color: #6493eb;
@@ -26,7 +30,17 @@
   --electric-color: #f9cf30;
   --dragon-color: #7037ff;
 
+  /* Define Grayscale  */
+  --dark-grey-color: #212121;
+  --medium-gray-color: #666666;
+  --light-gray-color: #e0e0e0;
+  --white-color: #ffffff;
+  --background-color: #f7f7f7;
+
   /* Define card properties */
   --card-width: 200px;
 }
 
+textarea:focus, input:focus{
+  outline: none;
+}
