@@ -69,7 +69,12 @@
         <div>{{item}}</div>
 
         <!-- Status value -->
-        <span>{{getPokemonStatusByKey(item)}}</span>
+        <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
+          <p>{{getPokemonStatusByKey(item)}}</p>
+          <span class="status-bar">
+            <div [style.width]="getStatusBarWidth(item)"></div>
+          </span>
+        </div>
 
       </article>
 

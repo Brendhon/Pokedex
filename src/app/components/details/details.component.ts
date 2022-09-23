@@ -82,6 +82,20 @@ export class DetailsComponent implements OnInit, OnChanges {
    */
    public getPokemonStatusByKey(key: string): string {
     const status = this.pokemon.status as any;
-    return status[key];
+    const statusValue = `${status[key]}`;
+
+    switch (statusValue.length) {
+      case 1:
+        return `00${statusValue}`;
+      case 2:
+        return `0${statusValue}`;
+      default:
+        return `${statusValue}`;
+    }
+  }
+
+  public getStatusBarWidth(type: string) {
+    const value = +this.getPokemonStatusByKey(type);
+    return `${Math.ceil((value*100)/200)}%`;
   }
 }
