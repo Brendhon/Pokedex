@@ -5,13 +5,24 @@
     <span>{{pokemon.number}}</span>
   </header>
 
-  <section class="pokemon-container">
-    <div class="pokemon-photo">
+  <div class="pokemon-container">
+    <!-- Pokemon img -->
+    <article class="pokemon-photo">
       <img [src]="pokemon.img" [alt]="pokemon.name">
-    </div>
-    <div class="actions">
+    </article>
+
+    <!-- Arrow buttons to go next and previous pokemon -->
+    <article class="actions">
       <img src="assets/icons/arrow.svg" alt="left arrow" (click)="previous()">
       <img src="assets/icons/arrow.svg" alt="right arrow" (click)="next()">
-    </div>
-  </section>
+    </article>
+
+    <!-- Pokemon types -->
+    <article class="flex">
+      <span *ngFor="let type of pokemon.types" class="type" [style.background-color]="getPokemonColorByType(type)">
+        {{type}}
+      </span>
+    </article>
+
+  </div>
 </main>

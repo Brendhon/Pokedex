@@ -72,3 +72,12 @@ textarea:focus, input:focus{
   border-radius: 5px;
 }
 /* END - SCROLL DEFAULT STYLES */
+
+/* START - FLEX CONTAINER */
+.flex {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 5px !important;
+}
+/* END - FLEX CONTAINER */

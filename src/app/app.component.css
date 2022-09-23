@@ -52,13 +52,6 @@ header input {
   justify-content: center;
 }
 
-.flex {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-}
-
 .empty-list {
   width: 100%;
   display: flex;

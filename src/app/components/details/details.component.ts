@@ -62,4 +62,13 @@ export class DetailsComponent implements OnInit, OnChanges {
   public previous(): void {
     this.updateSelectedPokemon.emit(this.pokemon.id - 1);
   }
+
+  /**
+   * Get css variable that contains the type color
+   * @param {string} type Pokemon type
+   * @returns {string} type color
+   */
+  public getPokemonColorByType(type: string): string {
+    return `var(--${type}-color)`
+  }
 }
