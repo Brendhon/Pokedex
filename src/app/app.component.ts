@@ -85,4 +85,22 @@ export class AppComponent implements OnInit {
   public selectPokemon(pokemon: Pokemon) {
     this.selectedPokemon = pokemon;
   }
+
+  /**
+   * Update Selected Pokemon
+   * @param {number | undefined} pokemonId Pokemon id
+   */
+  public updateSelectedPokemon(pokemonId: number | undefined): void {
+    switch (true) {
+      case pokemonId == undefined:
+        this.selectedPokemon = undefined;
+        break;
+      case pokemonId! > this.limit:
+        this.selectedPokemon = this.pokemons.find(value => value.id == 1);
+        break;
+      case pokemonId! == 0:
+        this.selectedPokemon = this.pokemons.find(value => value.id == this.limit);
+        break;
+    }
+  }
 }

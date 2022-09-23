@@ -38,7 +38,7 @@
   </div>
 
   <aside *ngIf="selectedPokemon">
-    <app-details [pokemon]="selectedPokemon"></app-details>
+    <app-details [pokemon]="selectedPokemon" (updateSelectedPokemon)="updateSelectedPokemon($event)"></app-details>
   </aside>
 
 </main>

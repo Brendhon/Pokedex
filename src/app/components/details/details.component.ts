@@ -11,10 +11,17 @@ import { Pokemon } from 'src/app/models';
 })
 export class DetailsComponent implements OnInit {
   @Input() pokemon!: Pokemon;
-  @Output() updateSelectedPokemon!: EventEmitter<number | null>;
+  @Output() updateSelectedPokemon: EventEmitter<number | undefined> = new EventEmitter<number | undefined>();
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  /**
+   * Clear selection
+   */
+  public clearSelection(): void {
+    this.updateSelectedPokemon.emit(undefined);
   }
 }
