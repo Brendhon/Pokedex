@@ -13,7 +13,7 @@ export class StorageService {
    * @param {Pokemon[]} pokemons Pokemon list
    */
   public setPokemonList(pokemons: Pokemon[]) {
-    sessionStorage.setItem('pokemons', JSON.stringify(pokemons));
+    localStorage.setItem('pokemons', JSON.stringify(pokemons));
   }
 
   /**
@@ -21,7 +21,7 @@ export class StorageService {
    * @returns {Pokemon[]} Pokemon list
    */
   public getPokemonList(): Pokemon[] {
-    const pokemons = sessionStorage.getItem('pokemons');
+    const pokemons = localStorage.getItem('pokemons');
     return pokemons ? JSON.parse(pokemons) : null
   }
 }

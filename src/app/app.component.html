@@ -24,7 +24,7 @@
     </header>
 
     <!-- Card list -->
-    <section class="grid">
+    <section class="grid" *ngIf="!isLoading">
       <app-card *ngFor="let pokemon of filteredPokemons" [pokemon]="pokemon" (click)="selectPokemon(pokemon)">
       </app-card>
     </section>
@@ -33,6 +33,12 @@
     <div class="empty-list" *ngIf="isListEmpty">
       <img src="assets/imgs/sad.svg" alt="Empty list" width="300">
       <h2>Nenhum Pokémon da primeira geração foi encontrado.</h2>
+    </div>
+
+    <!-- Empty list feedback -->
+    <div *ngIf="isLoading" class="flex-column">
+      <div class="pokeball bounce"></div>
+      <div class="loading">Carregando</div>
     </div>
 
   </div>

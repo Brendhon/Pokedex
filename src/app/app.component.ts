@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
   public listOrder: LIST_ORDER_OPTIONS = LIST_ORDER_OPTIONS.NORMAL;
   public listOrderOptions = LIST_ORDER_OPTIONS;
   public selectedPokemon: Pokemon | undefined;
+  public isLoading: boolean = false;
 
   constructor(private pokeapiService: PokeapiService) { }
 
@@ -32,12 +33,14 @@ export class AppComponent implements OnInit {
    * @param {number} limit Limit of pokemons
    */
   public getPokemonList(limit: number = this.limit): void {
+    this.isLoading = true;
     this.pokeapiService
       .getPokemonList(limit)
       .then(value => {
         this.pokemons = value;
         this.filteredPokemons = this.pokemons;
         this.selectedPokemon = value[0];
+        this.isLoading = false;
       })
   }
 
