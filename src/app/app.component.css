@@ -12,7 +12,7 @@ header {
   gap: 16px;
 }
 
-header div {
+header div:first-child {
   width: 100%;
   max-width: 1000px;
   display: flex;

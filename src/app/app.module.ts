@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { CardComponent } from './components/card/card.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     CardComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule

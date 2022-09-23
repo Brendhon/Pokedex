@@ -6,7 +6,14 @@
         <h1>Pokédex</h1>
       </span>
       <span class="flex" style="cursor: pointer;" (click)="toggleListOrder()">
-        #<img src="assets/icons/bottom-arrow.svg" alt="bottom-arrow" width="16" [class.img-vert]="isListReversed">
+        <container-element [ngSwitch]="listOrder">
+          <div *ngSwitchCase="listOrderOptions.NORMAL">
+            <img src="assets/icons/normal-order.svg" alt="bottom-arrow" width="35">
+          </div>
+          <div *ngSwitchCase="listOrderOptions.ASC">
+            <img src="assets/icons/asc-order.svg" alt="bottom-arrow" width="35">
+          </div>
+        </container-element>
       </span>
     </div>
     <input [formControl]="search" type="text" placeholder="Pesquisar nome">
@@ -20,3 +27,4 @@
     <h2>Nenhum Pokémon da primeira geração foi encontrado.</h2>
   </div>
 </main>
+

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { LIST_ORDER_OPTIONS } from './models/pokeapi.enum';
 import { Pokemon } from './models/pokeapi.model';
 import { PokeapiService } from './services/pokeapi/pokeapi.service';
 
@@ -15,7 +16,8 @@ export class AppComponent implements OnInit {
   public filteredPokemons: Pokemon[] = [] // List with filtered Pokemons
   public limit = 151; // Limit of pokemons
   public isListEmpty = false;
-  public isListReversed = false;
+  public listOrder: LIST_ORDER_OPTIONS = LIST_ORDER_OPTIONS.NORMAL;
+  public listOrderOptions = LIST_ORDER_OPTIONS;
 
   constructor(private pokeapiService: PokeapiService) { }
 
@@ -62,8 +64,16 @@ export class AppComponent implements OnInit {
    * Toggle List Order
    */
   public toggleListOrder() {
-    this.isListReversed = !this.isListReversed;
-    this.filteredPokemons = this.filteredPokemons.reverse();
-  }
+    switch (this.listOrder) {
+      case LIST_ORDER_OPTIONS.NORMAL:
+        this.listOrder = LIST_ORDER_OPTIONS.ASC;
+        this.filteredPokemons = this.filteredPokemons.sort((a, b) => a.name.localeCompare(b.name))
+        break;
 
+      default:
+        this.listOrder = LIST_ORDER_OPTIONS.NORMAL;
+        this.filteredPokemons = this.filteredPokemons.sort((a, b) => a.number - b.number);
+        break;
+    }
+  }
 }
