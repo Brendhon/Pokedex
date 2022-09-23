@@ -1,7 +1,7 @@
 <main id="pokemonDetails">
   <header>
     <img src="assets/icons/left-arrow-white.svg" alt="Go back" (click)="clearSelection()">
-    <h2 class="pokemon-name">{{pokemon.name}}</h2>
+    <h1 class="pokemon-name">{{pokemon.name}}</h1>
     <span>{{pokemon.number}}</span>
   </header>
 
@@ -24,5 +24,55 @@
       </span>
     </article>
 
+    <!-- Pokemon about -->
+    <section class="pokemon-about">
+      <h2>About</h2>
+
+      <div>
+        <!-- Pokemon Weight -->
+        <article>
+          <span>
+            <img src="assets/icons/weight.svg" alt="Pokemon weight">
+            {{pokemon.weight}}
+          </span>
+          <h4>Weight</h4>
+        </article>
+
+        <!-- Pokemon height -->
+        <article>
+          <span>
+            <img src="assets/icons/height.svg" alt="Pokemon height">
+            {{pokemon.height}}
+          </span>
+          <h4>Height</h4>
+        </article>
+
+        <!-- Pokemon moves -->
+        <article>
+          <span>
+            <div *ngFor="let move of pokemon.moves">{{move}}</div>
+          </span>
+          <h4>Moves</h4>
+        </article>
+      </div>
+
+    </section>
+
+    <!-- Pokemon base status -->
+    <section class="pokemon-status">
+      <h2>Base Stats</h2>
+
+      <!-- Status -->
+      <article *ngFor="let item of statusOptions">
+
+        <!-- Status Name -->
+        <div>{{item}}</div>
+
+        <!-- Status value -->
+        <span>{{getPokemonStatusByKey(item)}}</span>
+
+      </article>
+
+    </section>
   </div>
 </main>

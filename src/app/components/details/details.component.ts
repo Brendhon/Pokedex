@@ -2,7 +2,7 @@ import { Input, OnChanges, SimpleChanges } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Output } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
-import { Pokemon } from 'src/app/models';
+import { Pokemon, Status } from 'src/app/models';
 
 @Component({
   selector: 'app-details',
@@ -12,6 +12,9 @@ import { Pokemon } from 'src/app/models';
 export class DetailsComponent implements OnInit, OnChanges {
   @Input() pokemon!: Pokemon;
   @Output() updateSelectedPokemon: EventEmitter<number | undefined> = new EventEmitter<number | undefined>();
+
+  // Local attr
+  public statusOptions = ["hp", "atk", "def", "satk", "sdef", "spd"];
 
   constructor() { }
 
@@ -70,5 +73,15 @@ export class DetailsComponent implements OnInit, OnChanges {
    */
   public getPokemonColorByType(type: string): string {
     return `var(--${type}-color)`
+  }
+
+  /**
+   * Get Pokemon Status By Key
+   * @param {string} key Status key
+   * @returns {string} Pokemon status value
+   */
+   public getPokemonStatusByKey(key: string): string {
+    const status = this.pokemon.status as any;
+    return status[key];
   }
 }
