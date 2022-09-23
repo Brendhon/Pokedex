@@ -6,6 +6,9 @@ main {
   /* Define header height */
   --header-height: 250px;
 
+  /* Define section color */
+  --primary-section-color: black;
+
   background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
 
   height: 100%;
@@ -104,6 +107,7 @@ header img {
 }
 
 .pokemon-about {
+  --primary-section-color: var(--primary-color);
   margin-top: 10px;
   display: flex;
   align-items: center;
@@ -112,7 +116,7 @@ header img {
 }
 
 h2 {
-  color: var(--primary-color);
+  color: var(--primary-section-color);
   margin: 30px;
 }
 
@@ -162,6 +166,7 @@ h2 {
 }
 
 .pokemon-status {
+  --primary-section-color: var(--secondary-color);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -175,11 +180,11 @@ h2 {
 }
 
 .pokemon-status article div {
-  border-right: 2px solid var(--primary-color);;
+  border-right: 2px solid var(--primary-section-color);;
   width: 80px;
   text-align: end;
   text-transform: uppercase;
   font-weight: 700;
   padding-right: 20px;
-  color: var(--primary-color);
+  color: var(--primary-section-color);
 }
