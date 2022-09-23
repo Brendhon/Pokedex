@@ -1,22 +1,25 @@
+/* START Main */
 main {
   /* Define primary color */
   --primary-color: black;
   --secondary-color: black;
 
   /* Define header height */
-  --header-height: 250px;
+  --header-height: 200px;
 
   /* Define section color */
   --section-color: black;
 
   background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
 
-  height: 95vh;
+  height: 820px;
   padding: 8px;
   border-radius: 8px;
-  margin-left: 10px;
+  margin: 15px;
 }
+/* END Main */
 
+/* START Header */
 header {
   display: flex;
   justify-content: space-between;
@@ -50,8 +53,11 @@ header span {
 
 header img {
   cursor: pointer;
+  display: none;
 }
+/* END Header */
 
+/* START Pokemon container */
 .pokemon-container {
   height: calc(100% - var(--header-height));
   background-color: var(--white-color);
@@ -66,10 +72,10 @@ header img {
 .pokemon-photo img {
   justify-content: center;
   position: absolute;
-  width: 350px;
+  width: 16rem;
   text-align: center;
   margin: auto;
-  margin-top: calc(40px - var(--header-height));
+  margin-top: calc(70px - var(--header-height));
 }
 
 .pokemon-name {
@@ -80,9 +86,9 @@ header img {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 30px;
+  margin: 20px;
   margin-top: -40px;
-  margin-bottom: 160px;
+  margin-bottom: 150px;
 }
 
 .actions img {
@@ -106,7 +112,9 @@ header img {
   border-radius: 8px;
   text-transform: capitalize;
 }
+/* END Pokemon container */
 
+/* START About */
 .pokemon-about {
   --section-color: var(--primary-color);
   margin-top: 10px;
@@ -118,7 +126,7 @@ header img {
 
 h2 {
   color: var(--section-color);
-  margin: 30px;
+  margin: 20px;
 }
 
 .pokemon-about div {
@@ -132,7 +140,7 @@ h2 {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  width: 150px;
+  width: 9rem;
   height: 100px;
 }
 
@@ -166,6 +174,9 @@ h2 {
   font-size: 12px;
 }
 
+/* END About */
+
+/* START Status */
 .pokemon-status {
   --section-color: var(--secondary-color);
   display: flex;
@@ -211,4 +222,26 @@ h2 {
   height: 5px;
   border-radius: 8px;
   color: transparent;
+}
+/* END Status */
+
+
+/* START Responsiveness */
+@media only screen and (max-width: 950px) {
+  header img  {
+    display: block;
+  }
+}
+@media only screen and (max-width: 475px) {
+  .pokemon-photo img {
+    width: 15rem;
+    margin-top: -150px;
+  }
+  .pokemon-about div article {
+    width: 6rem;
+  }
+
+  .actions {
+    margin-bottom: 120px;
+  }
 }

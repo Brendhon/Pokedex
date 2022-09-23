@@ -5,7 +5,7 @@ main {
 
 .has-selected-pokemon {
   overflow-y: auto;
-  max-height: 80vh;
+  max-height: 95vh;
 }
 
 aside {
@@ -58,4 +58,16 @@ header input {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+/* START Responsiveness */
+@media only screen and (max-width: 950px) {
+  .has-selected-pokemon  {
+    display: none;
+  }
+  aside {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
 }

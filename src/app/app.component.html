@@ -1,6 +1,6 @@
 <main>
 
-  <div style="width: 100%;">
+  <div style="width: 100%;" [class.has-selected-pokemon]="selectedPokemon">
 
     <!-- Header -->
     <header>
@@ -24,7 +24,7 @@
     </header>
 
     <!-- Card list -->
-    <section class="grid" [class.has-selected-pokemon]="selectedPokemon">
+    <section class="grid">
       <app-card *ngFor="let pokemon of filteredPokemons" [pokemon]="pokemon" (click)="selectPokemon(pokemon)">
       </app-card>
     </section>
