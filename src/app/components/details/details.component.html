@@ -33,7 +33,7 @@
         <article>
           <span>
             <img src="assets/icons/weight.svg" alt="Pokemon weight">
-            {{pokemon.weight | pokemonWeight}}
+            <div class="about-content"> {{pokemon.weight | pokemonWeight}} </div>
           </span>
           <h4>Weight</h4>
         </article>
@@ -42,7 +42,7 @@
         <article>
           <span>
             <img src="assets/icons/height.svg" alt="Pokemon height">
-            {{pokemon.height | pokemonHeight}}
+            <div class="about-content"> {{pokemon.height | pokemonHeight}} </div>
           </span>
           <h4>Height</h4>
         </article>
@@ -50,7 +50,7 @@
         <!-- Pokemon moves -->
         <article>
           <span>
-            <div *ngFor="let move of pokemon.moves">{{move}}</div>
+            <div *ngFor="let move of pokemon.moves" class="about-content">{{move}}</div>
           </span>
           <h4>Moves</h4>
         </article>

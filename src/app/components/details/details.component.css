@@ -237,11 +237,22 @@ h2 {
     width: 15rem;
     margin-top: -150px;
   }
+
   .pokemon-about div article {
     width: 6rem;
+    padding: 0px;
+  }
+
+  .about-content {
+    font-size: smaller;
   }
 
   .actions {
     margin-bottom: 120px;
+  }
+
+  header:before {
+    width: 200px;
+    height: 205px;
   }
 }
