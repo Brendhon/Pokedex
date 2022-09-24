@@ -7,6 +7,7 @@ main {
 .has-selected-pokemon {
   overflow-y: auto;
   max-height: 95vh;
+  min-height: 820px;
 }
 
 aside {
