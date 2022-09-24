@@ -94,7 +94,12 @@ export class DetailsComponent implements OnInit, OnChanges {
     }
   }
 
-  public getStatusBarWidth(type: string) {
+  /**
+   * Get bar width
+   * @param {string} type Status Type
+   * @returns {string} Width
+   */
+  public getStatusBarWidth(type: string): string {
     const value = +this.getPokemonStatusByKey(type);
     return `${Math.ceil((value*100)/200)}%`;
   }
