@@ -2,6 +2,7 @@ import { Input, OnChanges, SimpleChanges } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Output } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
+import { POKEMON_LIMIT } from 'src/app/constants/pokemon';
 import { Pokemon, Status } from 'src/app/models';
 
 @Component({
@@ -102,5 +103,21 @@ export class DetailsComponent implements OnInit, OnChanges {
   public getStatusBarWidth(type: string): string {
     const value = +this.getPokemonStatusByKey(type);
     return `${Math.ceil((value*100)/200)}%`;
+  }
+
+  /**
+   * Check if can show Right Arrow
+   * @returns {boolean} True if can show Right Arrow
+   */
+  public showRightArrow(): boolean {
+    return this.pokemon.id < POKEMON_LIMIT;
+  }
+
+  /**
+   * Check if can show Left Arrow
+   * @returns {boolean} True if can show Left Arrow
+   */
+  public showLeftArrow(): boolean {
+    return this.pokemon.id > 1;
   }
 }

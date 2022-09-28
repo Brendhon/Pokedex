@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { POKEMON_LIMIT } from './constants/pokemon';
 import { LIST_ORDER_OPTIONS } from './models/pokeapi.enum';
 import { Pokemon } from './models/pokeapi.model';
 import { PokeapiService } from './services/pokeapi/pokeapi.service';
@@ -14,7 +15,7 @@ export class AppComponent implements OnInit {
   public search = new FormControl(''); // From input
   public pokemons: Pokemon[] = []; // List with all Pokemons
   public filteredPokemons: Pokemon[] = [] // List with filtered Pokemons
-  public limit = 151; // Limit of pokemons
+  public limit = POKEMON_LIMIT; // Limit of pokemons
   public isListEmpty = false;
   public listOrder: LIST_ORDER_OPTIONS = LIST_ORDER_OPTIONS.NORMAL;
   public listOrderOptions = LIST_ORDER_OPTIONS;
