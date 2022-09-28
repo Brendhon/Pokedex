@@ -36,19 +36,21 @@ export class PokeapiService {
    */
   private async fetchPokemonDataByList(allPokemons: Results[]): Promise<Pokemon[]> {
     // Initiate pokemon list
-    const pokemons: Pokemon[] = [];
+    const promises = [];
 
     // Get data for each pokemon
     for (let index = 0; index < allPokemons.length; index++) {
       const pokemon = allPokemons[index];
-      pokemons.push(await this.fetchPokemonDataFromUrl(pokemon.url))
+      promises.push(this.fetchPokemonDataFromUrl(pokemon.url))
     }
 
-    // Save pokemon list
-    this.storageService.setPokemonList(pokemons);
-
-    // Return data
-    return pokemons;
+    // Execute all promises
+    return Promise.all(promises).then((pokemons: Pokemon[]) => {
+      // Save pokemon list
+      this.storageService.setPokemonList(pokemons);
+      // Return data
+      return pokemons;
+    })
   }
 
   /**
@@ -151,7 +153,7 @@ export class PokeapiService {
    * @param {any} data Search result
    * @returns {string} number
    */
-   public getPokemonNumber(data: any): string {
+  public getPokemonNumber(data: any): string {
     const number = `${data.id}`;
     switch (number.length) {
       case 1:
