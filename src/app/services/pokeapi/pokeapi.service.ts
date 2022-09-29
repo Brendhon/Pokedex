@@ -34,7 +34,7 @@ export class PokeapiService {
    * @param {Results[]} allPokemons All pokemons
    * @returns {Promise<Pokemon[]>} List of pokemon data
    */
-  private async fetchPokemonDataByList(allPokemons: Results[]): Promise<Pokemon[]> {
+  private async fetchPokemonDataByList(allPokemons: Results[]): Promise<Pokemon[]>  {
     // Initiate pokemon list
     const promises = [];
 
@@ -45,9 +45,18 @@ export class PokeapiService {
     }
 
     // Execute all promises
-    return Promise.all(promises).then((pokemons: Pokemon[]) => {
-      // Save pokemon list
+    return Promise.allSettled(promises).then((results: PromiseSettledResult<Pokemon>[]) => {
+      // Initiate pokemons flag
+      const pokemons: Pokemon[] = [];
+
+      // Get all pokemons that has some value
+      results.forEach(result => {
+        if (result.status == 'fulfilled') pokemons.push(result.value);
+      })
+
+      // Save pokemon list on storage
       this.storageService.setPokemonList(pokemons);
+
       // Return data
       return pokemons;
     })
