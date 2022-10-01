@@ -12,7 +12,7 @@ main {
 
   background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
 
-  height: 920px;
+  max-height: 920px;
   padding: 8px;
   border-radius: 8px;
   margin: 15px;
@@ -235,34 +235,64 @@ h2 {
 }
 /* END Status */
 
-
 /* START Responsiveness */
 @media only screen and (max-width: 950px) {
-  header img  {
+  header img {
     display: block;
   }
 }
-@media only screen and (max-width: 475px) {
+@media only screen and (max-height: 920px) {
+  main {
+    --header-height: 150px;
+    height: 590px;
+  }
+
   .pokemon-photo img {
-    width: 15rem;
-    margin-top: -150px;
+    width: 10rem;
+    margin-top: -100px;
+  }
+
+  h2 {
+    margin: 10px;
+    font-size: medium;
+  }
+
+  .pokemon-about {
+    margin: 0px;
   }
 
   .pokemon-about div article {
     width: 6rem;
+    height: 70px;
     padding: 0px;
   }
 
   .about-content {
-    font-size: smaller;
+    font-size: 10px;
+  }
+
+  .pokemon-description {
+    font-size: 10px;
+    padding: 10px 20px;
+    padding-bottom: 0px;
   }
 
   .actions {
-    margin-bottom: 120px;
+    margin-bottom: 80px;
+  }
+
+  .type {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 4px;
   }
 
   header:before {
     width: 200px;
     height: 205px;
+  }
+
+  .pokemon-status {
+    font-size: smaller;
   }
 }

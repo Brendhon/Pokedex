@@ -40,6 +40,7 @@ export class AppComponent implements OnInit {
       .then(value => {
         this.pokemons = value;
         this.filteredPokemons = this.pokemons;
+        this.selectPokemon(value[0])
         this.isLoading = false;
       })
   }
