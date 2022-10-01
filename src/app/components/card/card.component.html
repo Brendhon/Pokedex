@@ -1,5 +1,7 @@
 <div [id]="getCardId()" class="card-container">
-  <header>{{pokemon.number}}</header>
-  <img [src]="pokemon.img" [alt]="pokemon.name">
+  <div>
+    <header>{{pokemon.number}}</header>
+    <img [src]="pokemon.img" [alt]="pokemon.name" loading="lazy">
+  </div>
   <h2>{{pokemon.name}}</h2>
 </div>

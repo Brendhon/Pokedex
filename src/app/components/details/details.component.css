@@ -182,6 +182,7 @@ h2 {
   text-align: justify;
   color: var(--dark-gray-color);
   margin: 0px;
+  margin-top: 10px;
 }
 /* END Description */
 

@@ -3,10 +3,7 @@
   --primary-color: black;
   --secondary-color: black;
 
-  background-image: linear-gradient(var(--white-color), var(--white-color)), radial-gradient(circle at left, var(--primary-color), var(--secondary-color));
-  border: double 2px transparent;
-  background-origin: border-box;
-  background-clip: content-box, border-box;
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
   border-radius: 8px;
   width: var(--card-width);
   display: flex;
@@ -20,11 +17,20 @@
   opacity: 0.7;
 }
 
+.card-container div {
+  background-color: white;
+  margin-top: 3px;
+  padding: 0px 22px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  height: 150px;
+  overflow: hidden;
+}
+
 .card-container header {
   width: 100%;
   text-align: end;
-  padding: 0px 8px;
-  padding-top: 4px;
+  padding: 4px 0px;
   color: var(--secondary-color);
 }
 
@@ -34,13 +40,10 @@
 
 .card-container h2 {
   width: 100%;
-  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
+  height: 30px;
   color: white;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
-  padding: 4px 8px;
   display: flex;
   align-items: center;
   justify-content: center;

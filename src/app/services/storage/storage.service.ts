@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { POKEMON_STORAGE } from 'src/app/constants/pokemon';
 import { Pokemon } from 'src/app/models/pokeapi.model';
 
 @Injectable({
@@ -13,7 +14,7 @@ export class StorageService {
    * @param {Pokemon[]} pokemons Pokemon list
    */
   public setPokemonList(pokemons: Pokemon[]) {
-    localStorage.setItem('pokemonsList', JSON.stringify(pokemons));
+    localStorage.setItem(POKEMON_STORAGE, JSON.stringify(pokemons));
   }
 
   /**
@@ -21,7 +22,7 @@ export class StorageService {
    * @returns {Pokemon[]} Pokemon list
    */
   public getPokemonList(): Pokemon[] {
-    const pokemons = localStorage.getItem('pokemonsList');
+    const pokemons = localStorage.getItem(POKEMON_STORAGE);
     return pokemons ? JSON.parse(pokemons) : null
   }
 }

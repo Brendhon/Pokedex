@@ -50,7 +50,7 @@ header input {
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, var(--card-width));
-  gap: 20px;
+  gap: 15px;
   justify-content: center;
 }
 
