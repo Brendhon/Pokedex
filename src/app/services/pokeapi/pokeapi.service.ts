@@ -114,7 +114,7 @@ export class PokeapiService {
       .then(resp => {
         const description = resp.flavor_text_entries
           .find((value: { version: { name: string; }; }) => value.version.name === 'firered')
-        return description?.flavor_text ?? '';
+        return description?.flavor_text ?? resp?.flavor_text_entries[0]?.flavor_text ?? '' ;
       })
   }
 
