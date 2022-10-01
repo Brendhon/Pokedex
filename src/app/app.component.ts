@@ -121,6 +121,7 @@ export class AppComponent implements OnInit {
   public onChangeGen(genId: number) {
     this.pokeapiService.setCurrentGeneration(genId);
     this.selectPokemon(undefined);
+    this.listOrder = LIST_ORDER_OPTIONS.NORMAL;
     this.getPokemonList()
   }
 }
