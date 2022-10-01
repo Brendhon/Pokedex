@@ -4,6 +4,7 @@ import { Output } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { POKEMON_LIMIT } from 'src/app/constants/pokemon';
 import { Pokemon, Status } from 'src/app/models';
+import { PokeapiService } from 'src/app/services/pokeapi/pokeapi.service';
 
 @Component({
   selector: 'app-details',
@@ -17,7 +18,7 @@ export class DetailsComponent implements OnInit, OnChanges {
   // Local attr
   public statusOptions = ["hp", "atk", "def", "satk", "sdef", "spd"];
 
-  constructor() { }
+  constructor(private pokeapiService: PokeapiService) { }
 
   ngOnInit(): void {
     this.setCardColors()
@@ -81,7 +82,7 @@ export class DetailsComponent implements OnInit, OnChanges {
    * @param {string} key Status key
    * @returns {string} Pokemon status value
    */
-   public getPokemonStatusByKey(key: string): string {
+  public getPokemonStatusByKey(key: string): string {
     const status = this.pokemon.status as any;
     const statusValue = `${status[key]}`;
 
@@ -102,7 +103,7 @@ export class DetailsComponent implements OnInit, OnChanges {
    */
   public getStatusBarWidth(type: string): string {
     const value = +this.getPokemonStatusByKey(type);
-    return `${Math.ceil((value*100)/200)}%`;
+    return `${Math.ceil((value * 100) / 200)}%`;
   }
 
   /**
@@ -110,7 +111,9 @@ export class DetailsComponent implements OnInit, OnChanges {
    * @returns {boolean} True if can show Right Arrow
    */
   public showRightArrow(): boolean {
-    return this.pokemon.id < POKEMON_LIMIT;
+    // Get current generation info
+    const gen = this.pokeapiService.getCurrentGeneration();
+    return this.pokemon.id < gen.offset + gen.limit;
   }
 
   /**
@@ -118,6 +121,8 @@ export class DetailsComponent implements OnInit, OnChanges {
    * @returns {boolean} True if can show Left Arrow
    */
   public showLeftArrow(): boolean {
-    return this.pokemon.id > 1;
+    // Get current generation info
+    const gen = this.pokeapiService.getCurrentGeneration();
+    return this.pokemon.id > gen.offset + 1;
   }
 }

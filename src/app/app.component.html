@@ -1,6 +1,9 @@
 <main>
 
   <div style="width: 100%;" [class.has-selected-pokemon]="selectedPokemon">
+    <select name="Generation" #selectGen (change)="onChangeGen(+selectGen.value)">
+      <option *ngFor="let gen of generationsOptions" [value]="gen.id">{{gen.name}}</option>
+    </select>
 
     <!-- Header -->
     <header>
@@ -20,7 +23,7 @@
           </container-element>
         </span>
       </div>
-      <input [formControl]="search" type="text" placeholder="Pesquisar">
+      <input [formControl]="search" type="text" placeholder="Search">
     </header>
 
     <!-- Card list -->
@@ -32,13 +35,13 @@
     <!-- Empty list feedback -->
     <div class="empty-list" *ngIf="isListEmpty">
       <img src="assets/imgs/sad.svg" alt="Empty list" width="300">
-      <h2>Nenhum Pokémon da primeira geração foi encontrado.</h2>
+      <h2>No Pokémon of this generation have been found.</h2>
     </div>
 
     <!-- Empty list feedback -->
     <div *ngIf="isLoading" class="flex-column">
       <div class="pokeball bounce"></div>
-      <div class="loading">Carregando</div>
+      <div class="loading">Loading</div>
     </div>
 
   </div>

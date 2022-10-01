@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { POKEMON_LIMIT } from './constants/pokemon';
+import { POKEMON_GENERATIONS, POKEMON_LIMIT } from './constants/pokemon';
 import { LIST_ORDER_OPTIONS } from './models/pokeapi.enum';
-import { Pokemon } from './models/pokeapi.model';
+import { Generation, Pokemon } from './models/pokeapi.model';
 import { PokeapiService } from './services/pokeapi/pokeapi.service';
 
 @Component({
@@ -15,10 +15,11 @@ export class AppComponent implements OnInit {
   public search = new FormControl(''); // From input
   public pokemons: Pokemon[] = []; // List with all Pokemons
   public filteredPokemons: Pokemon[] = [] // List with filtered Pokemons
-  public limit = POKEMON_LIMIT; // Limit of pokemons
   public isListEmpty = false;
   public listOrder: LIST_ORDER_OPTIONS = LIST_ORDER_OPTIONS.NORMAL;
   public listOrderOptions = LIST_ORDER_OPTIONS;
+  public generationsOptions = POKEMON_GENERATIONS;
+  public selectedGenerations: Generation = POKEMON_GENERATIONS[0];
   public selectedPokemon: Pokemon | undefined;
   public isLoading: boolean = false;
 
@@ -31,12 +32,11 @@ export class AppComponent implements OnInit {
 
   /**
    * Get pokemon list
-   * @param {number} limit Limit of pokemons
    */
-  public getPokemonList(limit: number = this.limit): void {
+  public getPokemonList(): void {
     this.isLoading = true;
     this.pokeapiService
-      .getPokemonList(limit)
+      .getPokemonList()
       .then(value => {
         this.pokemons = value;
         this.filteredPokemons = this.pokemons;
@@ -84,9 +84,9 @@ export class AppComponent implements OnInit {
 
   /**
    * Select a pokemon
-   * @param {Pokemon} pokemon Selected pokemon
+   * @param {Pokemon | undefined} pokemon Selected pokemon
    */
-  public selectPokemon(pokemon: Pokemon) {
+  public selectPokemon(pokemon: Pokemon | undefined) {
     this.selectedPokemon = pokemon;
   }
 
@@ -95,19 +95,33 @@ export class AppComponent implements OnInit {
    * @param {number | undefined} pokemonId Pokemon id
    */
   public updateSelectedPokemon(pokemonId: number | undefined): void {
+    // Get current generation info
+    const gen = this.pokeapiService.getCurrentGeneration();
+
     switch (true) {
       case pokemonId == undefined:
         this.selectedPokemon = undefined;
         break;
-      case pokemonId! > this.limit:
+      case pokemonId! > gen.offset + gen.limit:
         this.selectedPokemon = this.pokemons.find(value => value.id == 1);
         break;
-      case pokemonId! == 0:
-        this.selectedPokemon = this.pokemons.find(value => value.id == this.limit);
+      case pokemonId! == gen.offset:
+        this.selectedPokemon = this.pokemons.find(value => value.id == gen.offset);
         break;
       default:
         this.selectedPokemon = this.pokemons.find(value => value.id == pokemonId)
         break;
     }
+  }
+
+  /**
+   * Change pokemon generation
+   * @param {number} genId Generation id
+   */
+  public onChangeGen(genId: number) {
+    this.pokeapiService.setCurrentGeneration(genId);
+    this.selectPokemon(undefined);
+    this.listOrder = LIST_ORDER_OPTIONS.NORMAL;
+    this.getPokemonList()
   }
 }
