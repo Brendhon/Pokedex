@@ -6,7 +6,7 @@
 
 ## ❓ Sobre o projeto
 
-Pokédex desenvolvida com base na primeira geração. Foi utilizado a API do **[PokeApi](https://pokeapi.co/)** para a coleta de dados e o Firebase pera realizar o **[deploy](https://pokedex-eb73a.web.app/)** da aplicação.
+Pokédex desenvolvida com base nas primeiras gerações. Foi utilizado a API do **[PokeApi](https://pokeapi.co/)** para a coleta de dados e o Firebase pera realizar o **[deploy](https://pokedex-eb73a.web.app/)** da aplicação.
 
 ---
 
