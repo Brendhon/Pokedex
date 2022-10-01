@@ -42,7 +42,7 @@ body {
 }
 
 /* START - INPUT DEFAULT STYLES */
-textarea:focus, input:focus{
+textarea:focus, input:focus, select:focus{
   outline: none;
 }
 /* END - INPUT DEFAULT STYLES */
