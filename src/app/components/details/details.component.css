@@ -12,7 +12,7 @@ main {
 
   background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
 
-  height: 820px;
+  height: 920px;
   padding: 8px;
   border-radius: 8px;
   margin: 15px;
@@ -175,6 +175,15 @@ h2 {
 }
 
 /* END About */
+
+/* START Description */
+.pokemon-description {
+  padding: 16px 20px;
+  text-align: justify;
+  color: var(--dark-gray-color);
+  margin: 0px;
+}
+/* END Description */
 
 /* START Status */
 .pokemon-status {

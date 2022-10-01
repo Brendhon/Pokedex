@@ -34,7 +34,7 @@ export class PokeapiService {
    * @param {Results[]} allPokemons All pokemons
    * @returns {Promise<Pokemon[]>} List of pokemon data
    */
-  private async fetchPokemonDataByList(allPokemons: Results[]): Promise<Pokemon[]>  {
+  private async fetchPokemonDataByList(allPokemons: Results[]): Promise<Pokemon[]> {
     // Initiate pokemon list
     const promises = [];
 
@@ -51,7 +51,9 @@ export class PokeapiService {
 
       // Get all pokemons that has some value
       results.forEach(result => {
-        if (result.status == 'fulfilled') pokemons.push(result.value);
+        result.status == 'fulfilled'
+          ? pokemons.push(result.value)
+          : this.handleError(result);
       })
 
       // Save pokemon list on storage
@@ -78,11 +80,11 @@ export class PokeapiService {
    * @param {any} data Search result
    * @returns {Pokemon} Pokemon data
    */
-  private getPokemonData(data: any): Pokemon {
+  private async getPokemonData(data: any): Promise<Pokemon> {
     return {
       id: data.id,
       name: data.name,
-      description: '',
+      description: await this.getPokemonDescription(data.id),
       height: data.height,
       weight: data.weight,
       img: data.sprites.other["official-artwork"].front_default,
@@ -92,6 +94,25 @@ export class PokeapiService {
       status: this.getPokemonStatus(data),
       colors: this.getPokemonColors(data),
     }
+  }
+
+  /**
+   * Get Pokemon Description
+   * @param {number} id Pokemon id
+   * @returns {string} Pokemon description
+   */
+  private async getPokemonDescription(id: number): Promise<string> {
+    // Define path
+    const path = `${this.url}/pokemon-species/${id}`
+
+    // Fetch pokemon description
+    return fetch(path)
+      .then(resp => resp.json())
+      .then(resp => {
+        const description = resp.flavor_text_entries
+          .find((value: { version: { name: string; }; }) => value.version.name === 'firered')
+        return description?.flavor_text ?? '';
+      })
   }
 
   /**
@@ -174,4 +195,11 @@ export class PokeapiService {
     }
   }
 
+  /**
+   * Handle Error
+   * @param {PromiseRejectedResult} error
+   */
+  private handleError(error: PromiseRejectedResult): void {
+    console.log(error.reason)
+  }
 }
