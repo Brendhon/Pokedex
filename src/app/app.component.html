@@ -1,6 +1,6 @@
 <main>
 
-  <div style="width: 100%;" [class.has-selected-pokemon]="selectedPokemon">
+  <div style="width: 100%;">
     <select name="Generation" #selectGen (change)="onChangeGen(+selectGen.value)">
       <option *ngFor="let gen of generationsOptions" [value]="gen.id">{{gen.name}}</option>
     </select>
@@ -27,7 +27,7 @@
     </header>
 
     <!-- Card list -->
-    <section class="grid" *ngIf="!isLoading">
+    <section class="grid card-list" *ngIf="!isLoading">
       <app-card *ngFor="let pokemon of filteredPokemons" [pokemon]="pokemon" (click)="selectPokemon(pokemon)">
       </app-card>
     </section>

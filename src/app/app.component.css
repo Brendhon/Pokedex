@@ -3,10 +3,9 @@ main {
   display: flex;
 }
 
-.has-selected-pokemon {
+.card-list {
   overflow-y: auto;
-  max-height: 95vh;
-  min-height: 920px;
+  max-height: 65vh;
 }
 
 aside {
@@ -20,7 +19,6 @@ header {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-bottom: 20px;
   padding: 20px;
   gap: 16px;
 }
