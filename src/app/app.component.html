@@ -1,6 +1,9 @@
 <main>
 
   <div style="width: 100%;" [class.has-selected-pokemon]="selectedPokemon">
+    <select name="Generation" #selectGen (change)="onChangeGen(+selectGen.value)">
+      <option *ngFor="let gen of generationsOptions" [value]="gen.id">{{gen.name}}</option>
+    </select>
 
     <!-- Header -->
     <header>

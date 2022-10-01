@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Pokemon, Results, SearchResult, Status } from 'src/app/models';
+import { POKEMON_GENERATIONS } from 'src/app/constants/pokemon';
+import { Generation, Pokemon, Results, SearchResult, Status } from 'src/app/models';
 import { StorageService } from '../storage/storage.service';
 
 @Injectable({
@@ -8,6 +9,7 @@ import { StorageService } from '../storage/storage.service';
 export class PokeapiService {
   // Pokeapi URL
   private url = 'https://pokeapi.co/api/v2';
+  private currentGeneration: Generation = POKEMON_GENERATIONS[0];
 
   constructor(private storageService: StorageService) { }
 
@@ -16,17 +18,18 @@ export class PokeapiService {
    * @param {number} limit Pokemon limit
    * @returns {Promise<Pokemon>} List of pokemons
    */
-  public async getPokemonList(limit: number = 151): Promise<Pokemon[]> {
+  public async getPokemonList(gen: Generation = this.currentGeneration): Promise<Pokemon[]> {
+
     // Define path
-    const path = `${this.url}/pokemon?limit=${limit}`
+    const path = `${this.url}/pokemon?offset=${gen.offset}&limit=${gen.limit}`
 
     // Get pokemon data from storage
-    const pokemons = this.storageService.getPokemonList()
+    const pokemons = this.storageService.getPokemonList(gen.id)
 
     // If no exist data on storage fetch data from endpoint
     return pokemons ?? fetch(path)
       .then(resp => resp.json()) // parse to json
-      .then((resp: SearchResult) => this.fetchPokemonDataByList(resp.results)) // Get pokemon info
+      .then((resp: SearchResult) => this.fetchPokemonDataByList(resp.results, gen.id)) // Get pokemon info
   }
 
   /**
@@ -34,7 +37,7 @@ export class PokeapiService {
    * @param {Results[]} allPokemons All pokemons
    * @returns {Promise<Pokemon[]>} List of pokemon data
    */
-  private async fetchPokemonDataByList(allPokemons: Results[]): Promise<Pokemon[]> {
+  private async fetchPokemonDataByList(allPokemons: Results[], genId: number): Promise<Pokemon[]> {
     // Initiate pokemon list
     const promises = [];
 
@@ -57,7 +60,7 @@ export class PokeapiService {
       })
 
       // Save pokemon list on storage
-      this.storageService.setPokemonList(pokemons);
+      this.storageService.setPokemonList(pokemons, genId);
 
       // Return data
       return pokemons;
@@ -201,5 +204,21 @@ export class PokeapiService {
    */
   private handleError(error: PromiseRejectedResult): void {
     console.log(error.reason)
+  }
+
+  /**
+   * Set Current Generation
+   * @param {number} genId Generation id
+   */
+  public setCurrentGeneration(genId: number): void {
+    this.currentGeneration = POKEMON_GENERATIONS.find(value => value.id == genId)!;
+  }
+
+  /**
+   * Get Current Generation
+   * @returns {Generation} Generation
+   */
+  public getCurrentGeneration(): Generation {
+    return this.currentGeneration;
   }
 }

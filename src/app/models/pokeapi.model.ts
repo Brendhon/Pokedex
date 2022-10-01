@@ -33,4 +33,11 @@ export interface Status {
   spd: number;
 }
 
+export interface Generation {
+  id: number,
+  offset: number,
+  limit: number,
+  name: string,
+}
+
 
