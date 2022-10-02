@@ -57,8 +57,21 @@ header img {
 }
 /* END Header */
 
-/* START Pokemon container */
-.pokemon-container {
+/* START Legendary */
+.legendary {
+  display:inline-block;
+  -webkit-mask:linear-gradient(-60deg,#000 30%,#0005,#000 70%) right/500% 100%;
+  background-repeat: repeat;
+  animation: shimmer 2s infinite;
+}
+/* END Legendary */
+
+@keyframes shimmer {
+  100% {-webkit-mask-position:left}
+}
+
+/* START Pokemon details */
+.pokemon-details {
   height: calc(100% - var(--header-height));
   background-color: var(--white-color);
   border-radius: 8px;
@@ -113,21 +126,22 @@ header img {
   text-transform: capitalize;
 }
 
-.generation {
+.features {
   display: flex;
-  justify-content: flex-end;
-  font-size: 10px;
+  justify-content: space-between;
   width: 100%;
   margin: 10px;
-  padding-right: 5px;
-  margin-bottom: 50px;
+  padding-right: 25px;
+  padding-top: 10px;
+  margin-bottom: 100px;
+  height: 20px;
 }
 
-.generation span {
+.features span {
   font-size: 10px;
 }
 
-/* END Pokemon container */
+/* END Pokemon details */
 
 /* START About */
 .pokemon-about {
@@ -294,8 +308,8 @@ h2 {
     padding-bottom: 0px;
   }
 
-  .generation {
-    margin-bottom: 15px;
+  .features {
+    margin-bottom: 40px;
   }
 
   .type {

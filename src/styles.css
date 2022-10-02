@@ -42,7 +42,9 @@ body {
 }
 
 /* START - INPUT DEFAULT STYLES */
-textarea:focus, input:focus, select:focus{
+textarea:focus,
+input:focus,
+select:focus {
   outline: none;
 }
 /* END - INPUT DEFAULT STYLES */
@@ -89,17 +91,26 @@ textarea:focus, input:focus, select:focus{
 }
 /* END - FLEX CONTAINER */
 
-
 /* START - bounce effect */
 .bounce {
   -webkit-animation: bounce 1000ms infinite;
-          animation: bounce 1000ms infinite;
+  animation: bounce 1000ms infinite;
 }
 
 @keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-  40% {transform: translateY(-30px);}
-  60% {transform: translateY(-15px);}
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
 }
 /* END - bounce effect */
 
@@ -113,11 +124,14 @@ textarea:focus, input:focus, select:focus{
   background: linear-gradient(to bottom, #eeeeee 0%, #ffffff 100%);
   margin: 10px auto;
 }
-.pokeball:before, .pokeball:after {
+.pokeball:before,
+.pokeball:after {
   content: "";
   display: block;
 }
-.pokeball, .pokeball:before, .pokeball:after {
+.pokeball,
+.pokeball:before,
+.pokeball:after {
   transition: all 600ms cubic-bezier(0.67, 0.4, 0.36, 0.75);
 }
 .pokeball:before {
@@ -149,8 +163,8 @@ textarea:focus, input:focus, select:focus{
   overflow: hidden;
   display: inline-block;
   vertical-align: bottom;
-  -webkit-animation: ellipsis steps(4,end) 900ms infinite;
-  animation: ellipsis steps(4,end) 900ms infinite;
+  -webkit-animation: ellipsis steps(4, end) 900ms infinite;
+  animation: ellipsis steps(4, end) 900ms infinite;
   content: "\2026"; /* ascii code for the ellipsis character */
   width: 0px;
 }
@@ -167,3 +181,32 @@ textarea:focus, input:focus, select:focus{
   }
 }
 /* END - ellipsis effect */
+
+/* START - Tooltip */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltip-text {
+  visibility: hidden;
+  width: 100px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 105%;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+/* END - Tooltip */

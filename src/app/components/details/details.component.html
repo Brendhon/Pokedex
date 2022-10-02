@@ -1,11 +1,11 @@
-<main id="pokemonDetails">
+<main id="pokemonDetails" [class.legendary]="pokemon.isLegendary">
   <header>
     <img src="assets/icons/left-arrow-white.svg" alt="Go back" (click)="clearSelection()">
     <h1 class="pokemon-name">{{pokemon.name}}</h1>
     <span>{{pokemon.number}}</span>
   </header>
 
-  <div class="pokemon-container">
+  <div class="pokemon-details">
     <!-- Pokemon img -->
     <article class="pokemon-photo">
       <img [src]="pokemon.img" [alt]="pokemon.name">
@@ -13,14 +13,22 @@
 
     <!-- Arrow buttons to go next and previous pokemon -->
     <article class="actions">
-      <img src="assets/icons/arrow.svg" alt="left arrow"
-        (click)="previous()">
-      <img src="assets/icons/arrow.svg" alt="right arrow"
-        (click)="next()">
+      <img src="assets/icons/arrow.svg" alt="left arrow" (click)="previous()">
+      <img src="assets/icons/arrow.svg" alt="right arrow" (click)="next()">
     </article>
 
     <!-- Pokemon generation -->
-    <article class="generation">
+    <article class="features">
+      <span class="specials">
+        <div *ngIf="pokemon.isLegendary" class="tooltip">
+          <img src="assets/imgs/legendary.png" alt="legendary pokemon" width="30">
+          <span class="tooltip-text">Legendary</span>
+        </div>
+        <div *ngIf="pokemon.isMythical" class="tooltip">
+          <img src="assets/imgs/mythical.png" alt="Mythical pokemon" width="30">
+          <span class="tooltip-text">Mythical</span>
+        </div>
+      </span>
       <span class="generation">
         {{pokemon.gen}}
       </span>
