@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { POKEMON_GENERATIONS } from 'src/app/constants/pokemon';
-import { Generation, Pokemon, Results, SearchResult, Status } from 'src/app/models';
+import { POKEMON_GENERATIONS, POKEMON_LIMIT } from 'src/app/constants/pokemon';
+import { Generation, Pokemon, PokemonSpecies, Results, SearchResult, Status } from 'src/app/models';
 import { StorageService } from '../storage/storage.service';
 
 @Injectable({
@@ -16,20 +16,21 @@ export class PokeapiService {
   /**
    * Get list of pokemons
    * @param {number} limit Pokemon limit
+   * @param {number} offset Offset
    * @returns {Promise<Pokemon>} List of pokemons
    */
-  public async getPokemonList(gen: Generation = this.currentGeneration): Promise<Pokemon[]> {
+  public async getPokemonList(offset: number = 0, limit: number = POKEMON_LIMIT): Promise<Pokemon[]> {
 
     // Define path
-    const path = `${this.url}/pokemon?offset=${gen.offset}&limit=${gen.limit}`
+    const path = `${this.url}/pokemon?offset=${offset}&limit=${limit}`
 
     // Get pokemon data from storage
-    const pokemons = this.storageService.getPokemonList(gen.id)
+    const pokemons = this.storageService.getPokemonList()
 
     // If no exist data on storage fetch data from endpoint
     return pokemons ?? fetch(path)
       .then(resp => resp.json()) // parse to json
-      .then((resp: SearchResult) => this.fetchPokemonDataByList(resp.results, gen.id)) // Get pokemon info
+      .then((resp: SearchResult) => this.fetchPokemonDataByList(resp.results)) // Get pokemon info
   }
 
   /**
@@ -37,7 +38,7 @@ export class PokeapiService {
    * @param {Results[]} allPokemons All pokemons
    * @returns {Promise<Pokemon[]>} List of pokemon data
    */
-  private async fetchPokemonDataByList(allPokemons: Results[], genId: number): Promise<Pokemon[]> {
+  private async fetchPokemonDataByList(allPokemons: Results[]): Promise<Pokemon[]> {
     // Initiate pokemon list
     const promises = [];
 
@@ -60,7 +61,7 @@ export class PokeapiService {
       })
 
       // Save pokemon list on storage
-      this.storageService.setPokemonList(pokemons, genId);
+      this.storageService.setPokemonList(pokemons);
 
       // Return data
       return pokemons;
@@ -84,10 +85,17 @@ export class PokeapiService {
    * @returns {Pokemon} Pokemon data
    */
   private async getPokemonData(data: any): Promise<Pokemon> {
+    // Get pokemon info from Pokemon species
+    const { description, isBaby, isLegendary, isMythical } = await this.getPokemonInfo(data.id);
+
+    // Return Pokemon data
     return {
       id: data.id,
       name: data.name,
-      description: await this.getPokemonDescription(data.id),
+      description,
+      isLegendary,
+      isBaby,
+      isMythical,
       height: data.height,
       weight: data.weight,
       img: data.sprites.other["official-artwork"].front_default,
@@ -96,15 +104,16 @@ export class PokeapiService {
       moves: this.getPokemonMoves(data),
       status: this.getPokemonStatus(data),
       colors: this.getPokemonColors(data),
+      gen: this.getPokemonGeneration(data),
     }
   }
 
   /**
-   * Get Pokemon Description
+   * Get Pokemon details from pokemon-species
    * @param {number} id Pokemon id
-   * @returns {string} Pokemon description
+   * @returns {string} Pokemon details
    */
-  private async getPokemonDescription(id: number): Promise<string> {
+  private async getPokemonInfo(id: number): Promise<PokemonSpecies> {
     // Define path
     const path = `${this.url}/pokemon-species/${id}`
 
@@ -112,10 +121,24 @@ export class PokeapiService {
     return fetch(path)
       .then(resp => resp.json())
       .then(resp => {
-        const description = resp.flavor_text_entries
-          .find((value: { version: { name: string; }; }) => value.version.name === 'firered')
-        return description?.flavor_text ?? resp?.flavor_text_entries[0]?.flavor_text ?? '' ;
+        return {
+          description: this.getPokemonDesc(resp),
+          isLegendary: resp.is_legendary,
+          isMythical: resp.is_mythical,
+          isBaby: resp.is_baby,
+        }
       })
+  }
+
+  /**
+   * Get Pokemon Desc
+   * @param {any} data Request data
+   * @returns {string} Pokemon description
+   */
+  public getPokemonDesc(data: any): string {
+    const description = data.flavor_text_entries
+      .find((value: any) => value.version.name === 'firered')
+    return description?.flavor_text ?? data?.flavor_text_entries[0]?.flavor_text ?? '';
   }
 
   /**
@@ -149,6 +172,16 @@ export class PokeapiService {
       moves.push(value.ability.name)
     });
     return moves;
+  }
+
+  /**
+   * Get pokemon generation
+   * @param {any} data Search result
+   * @returns {string} generation
+   */
+  private getPokemonGeneration(data: any): string {
+    const pokemonId = data.id;
+    return POKEMON_GENERATIONS.find(gen => pokemonId > gen.offset && pokemonId <= gen.until && gen.id !== 0)!.name;
   }
 
 

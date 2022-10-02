@@ -88,7 +88,7 @@ header img {
   align-items: center;
   margin: 20px;
   margin-top: -40px;
-  margin-bottom: 150px;
+  margin-bottom: 25px;
 }
 
 .actions img {
@@ -112,6 +112,21 @@ header img {
   border-radius: 8px;
   text-transform: capitalize;
 }
+
+.generation {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 10px;
+  width: 100%;
+  margin: 10px;
+  padding-right: 5px;
+  margin-bottom: 50px;
+}
+
+.generation span {
+  font-size: 10px;
+}
+
 /* END Pokemon container */
 
 /* START About */
@@ -279,8 +294,8 @@ h2 {
     padding-bottom: 0px;
   }
 
-  .actions {
-    margin-bottom: 80px;
+  .generation {
+    margin-bottom: 15px;
   }
 
   .type {

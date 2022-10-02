@@ -19,7 +19,11 @@ export interface Pokemon {
   height: number;
   moves: string[];
   img: string;
-  description: string;
+  description: string,
+  isLegendary: boolean,
+  isBaby: boolean,
+  isMythical: boolean,
+  gen: string;
   status: Status;
   colors: string[];
 }
@@ -37,7 +41,15 @@ export interface Generation {
   id: number,
   offset: number,
   limit: number,
+  until: number,
   name: string,
+}
+
+export interface PokemonSpecies {
+  description: string,
+  isLegendary: boolean,
+  isBaby: boolean,
+  isMythical: boolean
 }
 
 

@@ -40,6 +40,7 @@ export class AppComponent implements OnInit {
       .then(value => {
         this.pokemons = value;
         this.filteredPokemons = this.pokemons;
+        this.selectPokemon(value[0])
         this.isLoading = false;
       })
   }
@@ -95,18 +96,15 @@ export class AppComponent implements OnInit {
    * @param {number | undefined} pokemonId Pokemon id
    */
   public updateSelectedPokemon(pokemonId: number | undefined): void {
-    // Get current generation info
-    const gen = this.pokeapiService.getCurrentGeneration();
-
     switch (true) {
       case pokemonId == undefined:
         this.selectedPokemon = undefined;
         break;
-      case pokemonId! > gen.offset + gen.limit:
+      case pokemonId! > POKEMON_LIMIT:
         this.selectedPokemon = this.pokemons.find(value => value.id == 1);
         break;
-      case pokemonId! == gen.offset:
-        this.selectedPokemon = this.pokemons.find(value => value.id == gen.offset);
+      case pokemonId! == 0:
+        this.selectedPokemon = this.pokemons.find(value => value.id == POKEMON_LIMIT);
         break;
       default:
         this.selectedPokemon = this.pokemons.find(value => value.id == pokemonId)
