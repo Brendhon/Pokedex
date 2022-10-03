@@ -210,3 +210,23 @@ select:focus {
   opacity: 1;
 }
 /* END - Tooltip */
+
+/* START - slide effect */
+@keyframes slide-left {
+  0% {
+      transform: translateX(100%);
+  }
+  100% {
+      transform: translateX(0);
+  }
+}
+
+@keyframes slide-right {
+  0% {
+      transform: translateX(0);
+  }
+  100% {
+      transform: translateX(100%);
+  }
+}
+/* END - slide effect */

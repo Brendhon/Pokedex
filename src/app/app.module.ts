@@ -9,6 +9,8 @@ import { CommonModule } from '@angular/common';
 import { DetailsComponent } from './components/details/details.component';
 import { PokemonWeightPipe } from './pipes/pokemon-weight/pokemon-weight.pipe';
 import { PokemonHeightPipe } from './pipes/pokemon-height/pokemon-height.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { PokemonHeightPipe } from './pipes/pokemon-height/pokemon-height.pipe';
     CommonModule,
     BrowserModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    LayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

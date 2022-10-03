@@ -46,7 +46,7 @@
 
   </div>
 
-  <aside *ngIf="selectedPokemon">
+  <aside *ngIf="selectedPokemon && showPokemonDetails" [@slideInOut]>
     <app-details [pokemon]="selectedPokemon" (updateSelectedPokemon)="updateSelectedPokemon($event)"></app-details>
   </aside>
 

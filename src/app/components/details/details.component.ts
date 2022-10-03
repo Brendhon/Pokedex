@@ -1,9 +1,9 @@
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { Input, OnChanges, SimpleChanges } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Output } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
-import { POKEMON_LIMIT } from 'src/app/constants/pokemon';
-import { Pokemon, Status } from 'src/app/models';
+import { Pokemon } from 'src/app/models';
 import { PokeapiService } from 'src/app/services/pokeapi/pokeapi.service';
 
 @Component({

@@ -4,11 +4,26 @@ import { POKEMON_GENERATIONS, POKEMON_LIMIT } from './constants/pokemon';
 import { LIST_ORDER_OPTIONS } from './models/pokeapi.enum';
 import { Generation, Pokemon } from './models/pokeapi.model';
 import { PokeapiService } from './services/pokeapi/pokeapi.service';
+import { trigger, transition, animate, style } from '@angular/animations'
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  animations: [
+    trigger('slideInOut', [
+      transition(':enter', [
+        style({ transform: 'translateX(100%)', opacity: 0 }),
+        animate('500ms', style({ transform: 'translateX(0)', opacity: 1 }))
+      ]),
+      transition(':leave', [
+        style({ transform: 'translateX(0)', opacity: 1 }),
+        animate('500ms', style({ transform: 'translateX(100%)', opacity: 0 }))
+      ])
+    ]
+    )
+  ],
 })
 export class AppComponent implements OnInit {
   public title = 'Pokédex';
@@ -22,8 +37,12 @@ export class AppComponent implements OnInit {
   public selectedGenerations: Generation = POKEMON_GENERATIONS[0];
   public selectedPokemon: Pokemon | undefined;
   public isLoading: boolean = false;
+  public showPokemonDetails: boolean = false;
 
-  constructor(private pokeapiService: PokeapiService) { }
+  constructor(
+    private pokeapiService: PokeapiService,
+    private breakpointObserver: BreakpointObserver
+  ) { }
 
   ngOnInit(): void {
     this.getPokemonList(); // Get pokemon list
@@ -40,7 +59,7 @@ export class AppComponent implements OnInit {
       .then(value => {
         this.pokemons = value;
         this.filteredPokemons = this.pokemons;
-        this.selectPokemon(value[0])
+        if (!this.isMobile()) this.selectPokemon(value[0])
         this.isLoading = false;
       })
   }
@@ -88,7 +107,48 @@ export class AppComponent implements OnInit {
    * @param {Pokemon | undefined} pokemon Selected pokemon
    */
   public selectPokemon(pokemon: Pokemon | undefined) {
-    this.selectedPokemon = pokemon;
+    if (pokemon) {
+      // Get pokemon card element
+      const card = document.getElementById(this.pokeapiService.getCardId(pokemon)) // Get element by id
+
+      // Added bounce effect
+      card?.classList.add('bounce')
+
+      // Check page width
+      if (this.isMobile()) {
+        // Remove bounce effect after 1 second and update pokemon details
+        setTimeout(() => {
+          this.selectedPokemon = pokemon;
+          this.showPokemonDetails = true;
+          card?.classList.remove('bounce');
+        }, 1000)
+      } else {
+
+        // Select pokemon
+        this.selectedPokemon = pokemon;
+        this.showPokemonDetails = true;
+
+        // Remove bounce effect after 1 second
+        setTimeout(() => card?.classList.remove('bounce'), 1000)
+      }
+
+    } else {
+      // Hide pokemon details
+      this.showPokemonDetails = false;
+
+      // After 500ms show pokemon list
+      setTimeout(() => {
+        this.selectedPokemon = undefined;
+      }, 500)
+    }
+  }
+
+  /**
+   * Check if is mobile
+   * @returns {boolean} True if is mobile
+   */
+  private isMobile(): boolean {
+    return this.breakpointObserver.isMatched('(max-width: 950px)');
   }
 
   /**
@@ -98,7 +158,7 @@ export class AppComponent implements OnInit {
   public updateSelectedPokemon(pokemonId: number | undefined): void {
     switch (true) {
       case pokemonId == undefined:
-        this.selectedPokemon = undefined;
+        this.selectPokemon(undefined);
         break;
       case pokemonId! > POKEMON_LIMIT:
         this.selectedPokemon = this.pokemons.find(value => value.id == 1);
@@ -122,4 +182,5 @@ export class AppComponent implements OnInit {
     this.listOrder = LIST_ORDER_OPTIONS.NORMAL;
     this.getPokemonList()
   }
+
 }

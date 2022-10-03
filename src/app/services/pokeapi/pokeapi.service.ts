@@ -254,4 +254,12 @@ export class PokeapiService {
   public getCurrentGeneration(): Generation {
     return this.currentGeneration;
   }
+
+  /**
+   * Get card id
+   * @returns {string} Card id
+   */
+  public getCardId(pokemon: Pokemon): string {
+    return 'card-' + pokemon.name;
+  }
 }

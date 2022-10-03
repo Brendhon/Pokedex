@@ -25,7 +25,7 @@ export class CardComponent implements OnInit, AfterViewInit {
    * @returns {string} Card id
    */
   public getCardId(): string {
-    return 'card-' + this.pokemon.name;
+    return this.pokeapiService.getCardId(this.pokemon);
   }
 
   /**
@@ -42,7 +42,5 @@ export class CardComponent implements OnInit, AfterViewInit {
     // Set CSS variable
     style.setProperty('--primary-color', primary);
     style.setProperty('--secondary-color', secondary ?? primary);
-
   }
-
 }

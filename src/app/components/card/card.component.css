@@ -13,10 +13,6 @@
   cursor: pointer;
 }
 
-.card-container:active {
-  opacity: 0.7;
-}
-
 .card-container div {
   background-color: white;
   margin-top: 3px;
