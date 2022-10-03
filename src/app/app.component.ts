@@ -139,7 +139,7 @@ export class AppComponent implements OnInit {
       // After 500ms show pokemon list
       setTimeout(() => {
         this.selectedPokemon = undefined;
-      }, 300)
+      }, 400)
     }
   }
 
