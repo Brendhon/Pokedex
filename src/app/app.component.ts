@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { POKEMON_GENERATIONS, POKEMON_LIMIT, POKEMON_TABLE } from './constants/pokemon';
+import { POKEMON_GENERATIONS, POKEMON_LIMIT } from './constants/pokemon';
 import { LIST_ORDER_OPTIONS } from './models/pokeapi.enum';
-import { Generation, Pokemon } from './models/pokeapi.model';
+import { Pokemon } from './models/pokeapi.model';
 import { PokeapiService } from './services/pokeapi/pokeapi.service';
-import { trigger, transition, animate, style, keyframes } from '@angular/animations'
+import { trigger, transition, animate, style } from '@angular/animations'
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { DbService } from './services/db/db.service';
 
@@ -35,7 +35,6 @@ export class AppComponent implements OnInit {
   public listOrder: LIST_ORDER_OPTIONS = LIST_ORDER_OPTIONS.NORMAL;
   public listOrderOptions = LIST_ORDER_OPTIONS;
   public generationsOptions = POKEMON_GENERATIONS;
-  public selectedGenerations: Generation = POKEMON_GENERATIONS[0];
   public selectedPokemon: Pokemon | undefined;
   public isLoading: boolean = false;
   public showPokemonDetails: boolean = false;
@@ -47,6 +46,7 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.pokeapiService.setCurrentGeneration(POKEMON_GENERATIONS[0].id)
     this.getPokemonList(); // Get pokemon list
     this.searchSub(); // Listen to research
   }

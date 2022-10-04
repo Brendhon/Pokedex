@@ -2,14 +2,14 @@ import Dexie, { liveQuery, Table } from 'dexie';
 import { Injectable } from '@angular/core';
 import { POKEMON_DB } from 'src/app/constants/pokemon';
 import { environment } from 'src/environments/environment';
-import { Generation, Pokemon } from 'src/app/models';
+import { Pokemon } from 'src/app/models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DbService extends Dexie {
   private pokemon!: Table<Pokemon, number>;
-  pokemon$ = liveQuery(() => this.getPokemonList());
+  public pokemon$ = liveQuery(() => this.getPokemonByGeneration());
 
   constructor() {
     super(POKEMON_DB);
@@ -39,7 +39,7 @@ export class DbService extends Dexie {
    * @param {number} genId Generation id
    * @returns {Promise<Pokemon[]>} Pokemon list
    */
-  public getPokemonByGeneration(genId: number): Promise<Pokemon[]> {
+  public getPokemonByGeneration(genId: number = 1): Promise<Pokemon[]> {
     return this.pokemon
       .where({ gen: genId })
       .toArray();
