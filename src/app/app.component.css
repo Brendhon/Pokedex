@@ -8,10 +8,11 @@ main {
   margin: 10px;
 }
 
-.card-list {
+#cardList {
   overflow-y: auto;
   max-height: calc(100vh - 200px);
   padding-top: 30px;
+  padding-bottom: 10px;
 }
 
 app-card {
@@ -85,7 +86,7 @@ select {
 }
 
 /* START Responsiveness */
-@media only screen and (max-width: 950px) {
+@media only screen and (max-width: 1050px) {
   .has-selected-pokemon {
     display: none;
   }

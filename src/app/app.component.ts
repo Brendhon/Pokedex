@@ -64,9 +64,7 @@ export class AppComponent implements OnInit {
     // Subscribe to listening change of
     this.db.pokemon$.subscribe(value => {
       if (value.length > 0) this.isLoading = false;
-      this.pokemons = value;
-      this.filteredPokemons = this.pokemons;
-      if (!this.isMobile()) this.selectPokemon(value[0])
+      this.setPokemonList(value)
     })
   }
 
@@ -113,13 +111,17 @@ export class AppComponent implements OnInit {
    * @param {Pokemon | undefined} pokemon Selected pokemon
    */
   public selectPokemon(pokemon: Pokemon | undefined) {
+    // Select pokemon
     if (pokemon) {
-      // Select pokemon
       this.selectedPokemon = pokemon;
       this.showPokemonDetails = true;
     } else {
       this.showPokemonDetails = false; // Hide pokemon details
-      setTimeout(() => this.selectedPokemon = undefined, 400) // After 400ms show pokemon list
+      setTimeout(() => {
+        const lastVisitPokemon = this.selectedPokemon;
+        this.selectedPokemon = undefined
+        this.scrollToPokemon(lastVisitPokemon!);
+      }, 400) // After 400ms show pokemon list
     }
   }
 
@@ -127,7 +129,7 @@ export class AppComponent implements OnInit {
    * Check if is mobile
    * @returns {boolean} True if is mobile
    */
-  private isMobile(): boolean {
+  private isMobileView(): boolean {
     return this.breakpointObserver.isMatched('(max-width: 950px)');
   }
 
@@ -147,7 +149,7 @@ export class AppComponent implements OnInit {
         this.selectedPokemon = this.pokemons.find(value => value.id == POKEMON_LIMIT);
         break;
       default:
-        this.selectedPokemon = this.pokemons.find(value => value.id == pokemonId)
+        this.selectedPokemon = this.pokemons.find(value => value.id == pokemonId);
         break;
     }
   }
@@ -156,11 +158,55 @@ export class AppComponent implements OnInit {
    * Change pokemon generation
    * @param {number} genId Generation id
    */
-  public onChangeGen(genId: number) {
+  public async onChangeGen(genId: number) {
+    // Set current generation
     this.pokeapiService.setCurrentGeneration(genId);
-    this.selectPokemon(undefined);
+
+    // Set list order
     this.listOrder = LIST_ORDER_OPTIONS.NORMAL;
-    this.getPokemonList()
+
+    // Get pokemon list
+    const pokemons = !!genId
+      ? await this.db.getPokemonByGeneration(genId)
+      : await this.db.getPokemonList()
+
+    // Set pokemons
+    this.setPokemonList(pokemons);
   }
 
+  /**
+   * Set Pokemon List
+   * @param {Pokemon[]} pokemons Pokemons
+   */
+  private setPokemonList(pokemons: Pokemon[]): void {
+    // Set local atributes
+    this.pokemons = pokemons;
+    this.filteredPokemons = this.pokemons;
+
+    // Check if is a mobile view or not
+    if (!this.isMobileView()) {
+      // Select first pokemon
+      this.selectPokemon(pokemons[0]);
+    }
+    // Scroll to the top
+    setTimeout(() => {
+      const element = document.getElementById('cardList');
+      if (element) element.scrollTop = 0;
+    })
+  }
+
+  /**
+   * Scroll to pokemon
+   * @param {Pokemon} pokemon Pokemon
+   */
+  public scrollToPokemon(pokemon: Pokemon): void {
+    // Get card id
+    const cardId = this.pokeapiService.getCardId(pokemon);
+
+    // Go to pokemon
+    setTimeout(() => {
+      const element = document.getElementById(cardId);
+      element?.scrollIntoView();
+    })
+  }
 }

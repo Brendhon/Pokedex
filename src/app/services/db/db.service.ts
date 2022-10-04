@@ -36,29 +36,17 @@ export class DbService extends Dexie {
 
   /**
    * Get Pokemon By Generation
-   * @param {Generation} gen Generation info
+   * @param {number} genId Generation id
    * @returns {Promise<Pokemon[]>} Pokemon list
    */
-  public getPokemonByGeneration(gen: Generation): Promise<Pokemon[]> {
+  public getPokemonByGeneration(genId: number): Promise<Pokemon[]> {
     return this.pokemon
-      .where({ gen: gen.id })
+      .where({ gen: genId })
       .toArray();
   }
 
   /**
-   * Get Pokemon By name
-   * @param {string} name Pokemon name
-   * @returns {Promise<Pokemon[]>} Pokemon list
-   */
-  public getPokemonByName(name: string): Promise<Pokemon[]> {
-    return this.pokemon
-      .where("name")
-      .startsWithIgnoreCase(name)
-      .toArray();
-  }
-
-  /**
-   * Get Pokemon By name
+   * Get Pokemon list
    * @returns {Promise<Pokemon[]>} Pokemon list
    */
   public getPokemonList(): Promise<Pokemon[]> {

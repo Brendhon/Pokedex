@@ -13,8 +13,10 @@
 
     <!-- Arrow buttons to go next and previous pokemon -->
     <article class="actions">
-      <img src="assets/icons/arrow.svg" alt="left arrow" (click)="previous()">
-      <img src="assets/icons/arrow.svg" alt="right arrow" (click)="next()">
+      <img [style.visibility]="showLeftArrow() ? 'visible' : 'hidden'" src="assets/icons/arrow.svg" alt="left arrow"
+        (click)="previous()">
+      <img [style.visibility]="showRightArrow() ? 'visible' : 'hidden'" src="assets/icons/arrow.svg" alt="right arrow"
+        (click)="next()">
     </article>
 
     <!-- Pokemon generation -->

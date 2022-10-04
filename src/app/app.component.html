@@ -27,7 +27,7 @@
     </header>
 
     <!-- Card list -->
-    <section class="grid card-list" *ngIf="!isLoading">
+    <section id="cardList" class="grid" *ngIf="!isLoading">
       <app-card *ngFor="let pokemon of filteredPokemons" [pokemon]="pokemon" (click)="selectPokemon(pokemon)">
       </app-card>
     </section>
