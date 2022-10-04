@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { POKEMON_GENERATIONS, POKEMON_LIMIT } from 'src/app/constants/pokemon';
 import { Generation, Pokemon, PokemonSpecies, Results, SearchResult, Status } from 'src/app/models';
-import { StorageService } from '../storage/storage.service';
+import { DbService } from '../db/db.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class PokeapiService {
   private url = 'https://pokeapi.co/api/v2';
   private currentGeneration: Generation = POKEMON_GENERATIONS[0];
 
-  constructor(private storageService: StorageService) { }
+  constructor(private db: DbService) { }
 
   /**
    * Get list of pokemons
@@ -19,16 +19,13 @@ export class PokeapiService {
    * @param {number} offset Offset
    * @returns {Promise<Pokemon>} List of pokemons
    */
-  public async getPokemonList(offset: number = 0, limit: number = POKEMON_LIMIT): Promise<Pokemon[]> {
+  public async fetchPokemonList(offset: number = 0, limit: number = POKEMON_LIMIT): Promise<void> {
 
     // Define path
     const path = `${this.url}/pokemon?offset=${offset}&limit=${limit}`
 
-    // Get pokemon data from storage
-    const pokemons = this.storageService.getPokemonList()
-
     // If no exist data on storage fetch data from endpoint
-    return pokemons ?? fetch(path)
+    fetch(path)
       .then(resp => resp.json()) // parse to json
       .then((resp: SearchResult) => this.fetchPokemonDataByList(resp.results)) // Get pokemon info
   }
@@ -38,7 +35,7 @@ export class PokeapiService {
    * @param {Results[]} allPokemons All pokemons
    * @returns {Promise<Pokemon[]>} List of pokemon data
    */
-  private async fetchPokemonDataByList(allPokemons: Results[]): Promise<Pokemon[]> {
+  private async fetchPokemonDataByList(allPokemons: Results[]): Promise<void> {
     // Initiate pokemon list
     const promises = [];
 
@@ -49,22 +46,13 @@ export class PokeapiService {
     }
 
     // Execute all promises
-    return Promise.allSettled(promises).then((results: PromiseSettledResult<Pokemon>[]) => {
-      // Initiate pokemons flag
-      const pokemons: Pokemon[] = [];
-
+    Promise.allSettled(promises).then((results: PromiseSettledResult<Pokemon>[]) => {
       // Get all pokemons that has some value
-      results.forEach(result => {
-        result.status == 'fulfilled'
-          ? pokemons.push(result.value)
-          : this.handleError(result);
-      })
+      const pokemons: Pokemon[] = results
+        .filter(result => result.status == 'fulfilled')
+        .map((result: any) => result.value)
 
-      // Save pokemon list on storage
-      this.storageService.setPokemonList(pokemons);
-
-      // Return data
-      return pokemons;
+      this.db.savePokemonList(pokemons);
     })
   }
 
@@ -76,29 +64,32 @@ export class PokeapiService {
   private async fetchPokemonDataFromUrl(url: string): Promise<Pokemon> {
     return fetch(url)
       .then(resp => resp.json())
-      .then(resp => this.getPokemonData(resp))
+      .then(resp => this.pokemonFactory(resp))
   }
 
   /**
-   * Get pokemon data
-   * @param {any} data Search result
+   * Form pokemon data
+   * @param {any} data Request data
    * @returns {Pokemon} Pokemon data
    */
-  private async getPokemonData(data: any): Promise<Pokemon> {
+  private async pokemonFactory(data: any): Promise<Pokemon> {
     // Get pokemon info from Pokemon species
     const { description, isBaby, isLegendary, isMythical } = await this.getPokemonInfo(data.id);
 
-    // Return Pokemon data
+    // Get pokemon img
+    const img = await this.getPokemonImg(data.sprites.other["official-artwork"].front_default)
+
+    // Form pokemon data
     return {
       id: data.id,
       name: data.name,
       description,
+      img,
       isLegendary,
       isBaby,
       isMythical,
       height: data.height,
       weight: data.weight,
-      img: data.sprites.other["official-artwork"].front_default,
       number: this.getPokemonNumber(data),
       types: this.getPokemonTypes(data),
       moves: this.getPokemonMoves(data),
@@ -106,6 +97,15 @@ export class PokeapiService {
       colors: this.getPokemonColors(data),
       gen: this.getPokemonGeneration(data),
     }
+  }
+
+  /**
+   * Download and store an image
+   * @param {string} url URL
+   * @returns {Promise<Blob>} Blob
+   */
+  private async getPokemonImg(url: string): Promise<Blob> {
+    return fetch(url).then(res => res?.blob())
   }
 
   /**
@@ -179,9 +179,9 @@ export class PokeapiService {
    * @param {any} data Search result
    * @returns {string} generation
    */
-  private getPokemonGeneration(data: any): string {
+  private getPokemonGeneration(data: any): number {
     const pokemonId = data.id;
-    return POKEMON_GENERATIONS.find(gen => pokemonId > gen.offset && pokemonId <= gen.until && gen.id !== 0)!.name;
+    return POKEMON_GENERATIONS.find(gen => pokemonId > gen.offset && pokemonId <= gen.until && gen.id !== 0)!.id;
   }
 
 
@@ -229,14 +229,6 @@ export class PokeapiService {
       default:
         return `#${number}`;
     }
-  }
-
-  /**
-   * Handle Error
-   * @param {PromiseRejectedResult} error
-   */
-  private handleError(error: PromiseRejectedResult): void {
-    console.log(error.reason)
   }
 
   /**

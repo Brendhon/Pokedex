@@ -18,12 +18,12 @@ export interface Pokemon {
   weight: number;
   height: number;
   moves: string[];
-  img: string;
+  img: Blob;
   description: string,
   isLegendary: boolean,
   isBaby: boolean,
   isMythical: boolean,
-  gen: string;
+  gen: number;
   status: Status;
   colors: string[];
 }

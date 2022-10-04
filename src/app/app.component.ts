@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { POKEMON_GENERATIONS, POKEMON_LIMIT } from './constants/pokemon';
+import { POKEMON_GENERATIONS, POKEMON_LIMIT, POKEMON_TABLE } from './constants/pokemon';
 import { LIST_ORDER_OPTIONS } from './models/pokeapi.enum';
 import { Generation, Pokemon } from './models/pokeapi.model';
 import { PokeapiService } from './services/pokeapi/pokeapi.service';
-import { trigger, transition, animate, style } from '@angular/animations'
+import { trigger, transition, animate, style, keyframes } from '@angular/animations'
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { DbService } from './services/db/db.service';
 
 @Component({
   selector: 'app-root',
@@ -41,7 +42,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     private pokeapiService: PokeapiService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private db: DbService,
   ) { }
 
   ngOnInit(): void {
@@ -52,16 +54,20 @@ export class AppComponent implements OnInit {
   /**
    * Get pokemon list
    */
-  public getPokemonList(): void {
+  public async getPokemonList(): Promise<void> {
+    // Show loading
     this.isLoading = true;
-    this.pokeapiService
-      .getPokemonList()
-      .then(value => {
-        this.pokemons = value;
-        this.filteredPokemons = this.pokemons;
-        if (!this.isMobile()) this.selectPokemon(value[0])
-        this.isLoading = false;
-      })
+
+    // Make request to get the data if they do not exist
+    if (!await this.db.hasPokemonList()) this.pokeapiService.fetchPokemonList();
+
+    // Subscribe to listening change of
+    this.db.pokemon$.subscribe(value => {
+      if (value.length > 0) this.isLoading = false;
+      this.pokemons = value;
+      this.filteredPokemons = this.pokemons;
+      if (!this.isMobile()) this.selectPokemon(value[0])
+    })
   }
 
   /**
@@ -108,38 +114,12 @@ export class AppComponent implements OnInit {
    */
   public selectPokemon(pokemon: Pokemon | undefined) {
     if (pokemon) {
-      // Get pokemon card element
-      const card = document.getElementById(this.pokeapiService.getCardId(pokemon)) // Get element by id
-
-      // Added bounce effect
-      card?.classList.add('bounce')
-
-      // Check page width
-      if (this.isMobile()) {
-        // Remove bounce effect after 1 second and update pokemon details
-        setTimeout(() => {
-          this.selectedPokemon = pokemon;
-          this.showPokemonDetails = true;
-          card?.classList.remove('bounce');
-        }, 500)
-      } else {
-
-        // Select pokemon
-        this.selectedPokemon = pokemon;
-        this.showPokemonDetails = true;
-
-        // Remove bounce effect after 1 second
-        setTimeout(() => card?.classList.remove('bounce'), 1000)
-      }
-
+      // Select pokemon
+      this.selectedPokemon = pokemon;
+      this.showPokemonDetails = true;
     } else {
-      // Hide pokemon details
-      this.showPokemonDetails = false;
-
-      // After 500ms show pokemon list
-      setTimeout(() => {
-        this.selectedPokemon = undefined;
-      }, 400)
+      this.showPokemonDetails = false; // Hide pokemon details
+      setTimeout(() => this.selectedPokemon = undefined, 400) // After 400ms show pokemon list
     }
   }
 
