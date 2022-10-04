@@ -43,7 +43,6 @@ export interface Generation {
   limit: number,
   until: number,
   name: string,
-  selected: boolean,
 }
 
 export interface PokemonSpecies {

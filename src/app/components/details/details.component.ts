@@ -3,8 +3,8 @@ import { EventEmitter } from '@angular/core';
 import { Output } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { Pokemon } from 'src/app/models';
-import { PokeapiService } from 'src/app/services/pokeapi/pokeapi.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { PokemonService } from 'src/app/services/pokemon/pokemon.service';
 
 @Component({
   selector: 'app-details',
@@ -19,7 +19,7 @@ export class DetailsComponent implements OnInit, OnChanges {
   public statusOptions = ["hp", "atk", "def", "satk", "sdef", "spd"];
 
   constructor(
-    private pokeapiService: PokeapiService,
+    private pokemonService: PokemonService,
     private sanitizer: DomSanitizer
   ) { }
 
@@ -115,7 +115,7 @@ export class DetailsComponent implements OnInit, OnChanges {
    */
   public showRightArrow(): boolean {
     // Get current generation info
-    const gen = this.pokeapiService.getCurrentGeneration();
+    const gen = this.pokemonService.getCurrentGeneration();
     return this.pokemon.id < gen.offset + gen.limit;
   }
 
@@ -125,7 +125,7 @@ export class DetailsComponent implements OnInit, OnChanges {
    */
   public showLeftArrow(): boolean {
     // Get current generation info
-    const gen = this.pokeapiService.getCurrentGeneration();
+    const gen = this.pokemonService.getCurrentGeneration();
     return this.pokemon.id > gen.offset + 1;
   }
 

@@ -2,8 +2,8 @@ import { Input } from '@angular/core';
 import { AfterViewInit } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { Pokemon } from 'src/app/models';
-import { PokeapiService } from 'src/app/services/pokeapi/pokeapi.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { PokemonService } from 'src/app/services/pokemon/pokemon.service';
 
 @Component({
   selector: 'app-card',
@@ -13,7 +13,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 export class CardComponent implements OnInit, AfterViewInit {
   @Input() pokemon!: Pokemon;
   constructor(
-    private pokeapiService: PokeapiService,
+    private pokeapiService: PokemonService,
     private sanitizer: DomSanitizer
   ) { }
 

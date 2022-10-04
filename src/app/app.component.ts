@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { POKEMON_GENERATIONS, POKEMON_LIMIT } from './constants/pokemon';
-import { LIST_ORDER_OPTIONS } from './models/pokeapi.enum';
-import { Pokemon } from './models/pokeapi.model';
-import { PokeapiService } from './services/pokeapi/pokeapi.service';
+import { DEFAULT_GENERATION, POKEMON_GENERATIONS, POKEMON_LIMIT } from './constants/pokemon';
+import { LIST_ORDER_OPTIONS } from './models/pokemon.enum';
+import { Pokemon } from './models/pokemon.model';
 import { trigger, transition, animate, style } from '@angular/animations'
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { DbService } from './services/db/db.service';
+import { PokemonService } from './services/pokemon/pokemon.service';
 
 @Component({
   selector: 'app-root',
@@ -35,18 +35,18 @@ export class AppComponent implements OnInit {
   public listOrder: LIST_ORDER_OPTIONS = LIST_ORDER_OPTIONS.NORMAL;
   public listOrderOptions = LIST_ORDER_OPTIONS;
   public generationsOptions = POKEMON_GENERATIONS;
+  public defaultGen = DEFAULT_GENERATION;
   public selectedPokemon: Pokemon | undefined;
   public isLoading: boolean = false;
   public showPokemonDetails: boolean = false;
 
   constructor(
-    private pokeapiService: PokeapiService,
+    private pokemonService: PokemonService,
     private breakpointObserver: BreakpointObserver,
     private db: DbService,
   ) { }
 
   ngOnInit(): void {
-    this.pokeapiService.setCurrentGeneration(POKEMON_GENERATIONS[0].id)
     this.getPokemonList(); // Get pokemon list
     this.searchSub(); // Listen to research
   }
@@ -59,7 +59,7 @@ export class AppComponent implements OnInit {
     this.isLoading = true;
 
     // Make request to get the data if they do not exist
-    if (!await this.db.hasPokemonList()) this.pokeapiService.fetchPokemonList();
+    if (!await this.db.hasPokemonList()) this.pokemonService.fetchPokemonList();
 
     // Subscribe to listening change of
     this.db.pokemon$.subscribe(value => {
@@ -160,7 +160,7 @@ export class AppComponent implements OnInit {
    */
   public async onChangeGen(genId: number) {
     // Set current generation
-    this.pokeapiService.setCurrentGeneration(genId);
+    this.pokemonService.setCurrentGeneration(genId);
 
     // Set list order
     this.listOrder = LIST_ORDER_OPTIONS.NORMAL;
@@ -201,7 +201,7 @@ export class AppComponent implements OnInit {
    */
   public scrollToPokemon(pokemon: Pokemon): void {
     // Get card id
-    const cardId = this.pokeapiService.getCardId(pokemon);
+    const cardId = this.pokemonService.getCardId(pokemon);
 
     // Go to pokemon
     setTimeout(() => {

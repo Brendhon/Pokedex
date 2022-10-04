@@ -2,7 +2,7 @@
 
   <div class="pokedex-container" [class.has-selected-pokemon]="selectedPokemon">
     <select name="Generation" #selectGen (change)="onChangeGen(+selectGen.value)">
-      <option *ngFor="let gen of generationsOptions" [value]="gen.id" [selected]="gen.selected">{{gen.name}}</option>
+      <option *ngFor="let gen of generationsOptions" [value]="gen.id" [selected]="gen.id == defaultGen">{{gen.name}}</option>
     </select>
 
     <!-- Header -->

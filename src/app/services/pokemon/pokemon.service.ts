@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
-import { POKEMON_GENERATIONS, POKEMON_LIMIT } from 'src/app/constants/pokemon';
+import { DEFAULT_GENERATION, POKEMON_GENERATIONS, POKEMON_LIMIT } from 'src/app/constants/pokemon';
 import { Generation, Pokemon, PokemonSpecies, Results, SearchResult, Status } from 'src/app/models';
 import { DbService } from '../db/db.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PokeapiService {
+export class PokemonService {
   // Pokeapi URL
   private url = 'https://pokeapi.co/api/v2';
-  private currentGeneration: Generation = POKEMON_GENERATIONS[0];
+  private currentGeneration!: Generation;
 
-  constructor(private db: DbService) { }
+  constructor(private db: DbService) {
+    this.setCurrentGeneration(DEFAULT_GENERATION)
+   }
 
   /**
    * Get list of pokemons
