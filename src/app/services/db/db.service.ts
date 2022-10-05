@@ -1,4 +1,4 @@
-import Dexie, { liveQuery, Table } from 'dexie';
+import Dexie, { liveQuery, Observable, Table } from 'dexie';
 import { Injectable } from '@angular/core';
 import { DEFAULT_GENERATION, POKEMON_DB } from 'src/app/constants/pokemon';
 import { environment } from 'src/environments/environment';
@@ -9,20 +9,16 @@ import { Pokemon } from 'src/app/models';
 })
 export class DbService extends Dexie {
   private pokemon!: Table<Pokemon, number>;
-  public pokemon$ = liveQuery(() => this.getPokemonByGeneration());
 
   constructor() {
     super(POKEMON_DB);
     this.version(environment.dbVersion).stores({
-      pokemon: 'id, name, gen'
+      pokemon: 'id, gen'
     });
 
-    //opening the database
-    this.open()
-      .then(data => console.log("DB Opened"))
-      .catch(err => console.log(err.message));
+    // Opening the database
+    this.open().catch(err => console.log(err.message));
   }
-
 
   /**
    * Add pokemon to database
@@ -39,25 +35,16 @@ export class DbService extends Dexie {
    * @param {number} genId Generation id
    * @returns {Promise<Pokemon[]>} Pokemon list
    */
-  public getPokemonByGeneration(genId: number = DEFAULT_GENERATION): Promise<Pokemon[]> {
-    return this.pokemon
-      .where({ gen: genId })
-      .toArray();
-  }
-
-  /**
-   * Get Pokemon list
-   * @returns {Promise<Pokemon[]>} Pokemon list
-   */
-  public getPokemonList(): Promise<Pokemon[]> {
-    return this.pokemon.toArray();
+  public getPokemonByGeneration(genId: number = DEFAULT_GENERATION): Observable<Pokemon[]> {
+    return liveQuery(() => this.pokemon.where({ gen: genId }).toArray());
   }
 
   /**
    * Check if has pokemon list
+   * @param {number} genId Generation id
    * @returns {Promise<boolean>} true if exist pokemon list
    */
-  public async hasPokemonList(): Promise<boolean> {
-    return (await this.pokemon.count()) > 0;
+  public async hasPokemonList(genId: number = DEFAULT_GENERATION): Promise<boolean> {
+    return (await this.pokemon.where({ gen: genId }).count()) > 0;
   }
 }

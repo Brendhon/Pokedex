@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DEFAULT_GENERATION, POKEMON_GENERATIONS, POKEMON_LIMIT } from 'src/app/constants/pokemon';
+import { DEFAULT_GENERATION, POKEMON_GENERATIONS } from 'src/app/constants/pokemon';
 import { Generation, Pokemon, PokemonSpecies, Results, SearchResult, Status } from 'src/app/models';
 import { DbService } from '../db/db.service';
 
@@ -17,14 +17,15 @@ export class PokemonService {
 
   /**
    * Get list of pokemons
-   * @param {number} limit Pokemon limit
-   * @param {number} offset Offset
+   * @param {number} genId Generation info
    * @returns {Promise<Pokemon>} List of pokemons
    */
-  public async fetchPokemonList(offset: number = 0, limit: number = POKEMON_LIMIT): Promise<void> {
+  public async fetchPokemonList(genId: number): Promise<void> {
+    // Find generation info
+    const gen = POKEMON_GENERATIONS.find(gen => gen.id == genId)!;
 
     // Define path
-    const path = `${this.url}/pokemon?offset=${offset}&limit=${limit}`
+    const path = `${this.url}/pokemon?offset=${gen.offset}&limit=${gen.limit}`
 
     // If no exist data on storage fetch data from endpoint
     fetch(path)

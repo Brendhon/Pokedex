@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { DEFAULT_GENERATION, POKEMON_GENERATIONS, POKEMON_LIMIT } from './constants/pokemon';
+import { DEFAULT_GENERATION, POKEMON_GENERATIONS } from './constants/pokemon';
 import { LIST_ORDER_OPTIONS } from './models/pokemon.enum';
 import { Pokemon } from './models/pokemon.model';
 import { trigger, transition, animate, style } from '@angular/animations'
@@ -55,16 +55,25 @@ export class AppComponent implements OnInit {
    * Get pokemon list
    */
   public async getPokemonList(): Promise<void> {
-    // Show loading
-    this.isLoading = true;
+    // Remove filtered pokemons
+    this.filteredPokemons = [];
 
-    // Make request to get the data if they do not exist
-    if (!await this.db.hasPokemonList()) this.pokemonService.fetchPokemonList();
+    // Get current generation
+    const genId = this.pokemonService.getCurrentGeneration().id;
+
+    // Check if data already exist
+    if (!await this.db.hasPokemonList(genId)) {
+      this.isLoading = true; // Show loading
+      this.pokemonService.fetchPokemonList(genId); // Make request to get the data if they do not exist
+    }
 
     // Subscribe to listening change of
-    this.db.pokemon$.subscribe(value => {
-      if (value.length > 0) this.isLoading = false;
-      this.setPokemonList(value)
+    const sub = this.db.getPokemonByGeneration(genId).subscribe(value => {
+      if (value.length > 0) {
+        this.isLoading = false;
+        sub.unsubscribe();
+        this.setPokemonList(value)
+      }
     })
   }
 
@@ -121,7 +130,7 @@ export class AppComponent implements OnInit {
         const lastVisitPokemon = this.selectedPokemon;
         this.selectedPokemon = undefined
         this.scrollToPokemon(lastVisitPokemon!);
-      }, 400) // After 400ms show pokemon list
+      }, 500) // After 400ms show pokemon list
     }
   }
 
@@ -138,18 +147,21 @@ export class AppComponent implements OnInit {
    * @param {number | undefined} pokemonId Pokemon id
    */
   public updateSelectedPokemon(pokemonId: number | undefined): void {
+    // Get current generation info
+    const gen = this.pokemonService.getCurrentGeneration();
+
     switch (true) {
       case pokemonId == undefined:
         this.selectPokemon(undefined);
         break;
-      case pokemonId! > POKEMON_LIMIT:
+      case pokemonId! > gen.offset + gen.limit:
         this.selectedPokemon = this.pokemons.find(value => value.id == 1);
         break;
-      case pokemonId! == 0:
-        this.selectedPokemon = this.pokemons.find(value => value.id == POKEMON_LIMIT);
+      case pokemonId! == gen.offset:
+        this.selectedPokemon = this.pokemons.find(value => value.id == gen.offset);
         break;
       default:
-        this.selectedPokemon = this.pokemons.find(value => value.id == pokemonId);
+        this.selectedPokemon = this.pokemons.find(value => value.id == pokemonId)
         break;
     }
   }
@@ -166,12 +178,7 @@ export class AppComponent implements OnInit {
     this.listOrder = LIST_ORDER_OPTIONS.NORMAL;
 
     // Get pokemon list
-    const pokemons = !!genId
-      ? await this.db.getPokemonByGeneration(genId)
-      : await this.db.getPokemonList()
-
-    // Set pokemons
-    this.setPokemonList(pokemons);
+    this.getPokemonList();
   }
 
   /**
@@ -184,15 +191,8 @@ export class AppComponent implements OnInit {
     this.filteredPokemons = this.pokemons;
 
     // Check if is a mobile view or not
-    if (!this.isMobileView()) {
-      // Select first pokemon
-      this.selectPokemon(pokemons[0]);
-    }
-    // Scroll to the top
-    setTimeout(() => {
-      const element = document.getElementById('cardList');
-      if (element) element.scrollTop = 0;
-    })
+    if (!this.isMobileView())
+      this.selectPokemon(pokemons[0]); // Select first pokemon
   }
 
   /**
@@ -205,8 +205,12 @@ export class AppComponent implements OnInit {
 
     // Go to pokemon
     setTimeout(() => {
-      const element = document.getElementById(cardId);
-      element?.scrollIntoView();
+      const listElement = document.getElementById('cardList');
+      const cardElement = document.getElementById(cardId);
+
+      // Set scroll position
+      if (listElement && cardElement)
+        listElement.scrollTop = cardElement.offsetTop - cardElement.offsetHeight - 20;
     })
   }
 }

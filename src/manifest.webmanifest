@@ -2,7 +2,7 @@
   "name": "Pokédex",
   "short_name": "Pokédex",
   "theme_color": "#f7f7f7",
-  "background_color": "#fafafa",
+  "background_color": "#f7f7f7",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
