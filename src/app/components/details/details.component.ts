@@ -4,7 +4,6 @@ import { Output } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import html2canvas from 'html2canvas';
 import { Pokemon } from 'src/app/models';
-import { PokemonService } from 'src/app/services/pokemon/pokemon.service';
 
 @Component({
   selector: 'app-details',
@@ -14,12 +13,14 @@ import { PokemonService } from 'src/app/services/pokemon/pokemon.service';
 export class DetailsComponent implements OnInit, OnChanges {
   @Input() pokemon!: Pokemon;
   @Input() disableDownload = false;
-  @Output() updateSelectedPokemon: EventEmitter<number | undefined> = new EventEmitter<number | undefined>();
+  @Input() showRightArrow = true;
+  @Input() showLeftArrow = true;
+  @Output() updateSelectedPokemon: EventEmitter<'next' | 'previous' | undefined> = new EventEmitter<'next' | 'previous' | undefined>();
 
   // Local attr
   public statusOptions = ["hp", "atk", "def", "satk", "sdef", "spd"];
 
-  constructor(private pokemonService: PokemonService) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.setCardColors()
@@ -27,7 +28,7 @@ export class DetailsComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     // Listening pokemon change
-    if (changes['pokemon'].previousValue !== changes['pokemon'].currentValue) {
+    if (changes['pokemon']?.previousValue !== changes['pokemon']?.currentValue) {
       this.setCardColors()
     }
   }
@@ -59,14 +60,14 @@ export class DetailsComponent implements OnInit, OnChanges {
    * Go to next pokemon
    */
   public next(): void {
-    this.updateSelectedPokemon.emit(this.pokemon.id + 1);
+    this.updateSelectedPokemon.emit('next');
   }
 
   /**
    * Go to previous pokemon
    */
   public previous(): void {
-    this.updateSelectedPokemon.emit(this.pokemon.id - 1);
+    this.updateSelectedPokemon.emit('previous');
   }
 
   /**
@@ -105,26 +106,6 @@ export class DetailsComponent implements OnInit, OnChanges {
   public getStatusBarWidth(type: string): string {
     const value = +this.getPokemonStatusByKey(type);
     return `${Math.ceil((value * 100) / 200)}%`;
-  }
-
-  /**
-   * Check if can show Right Arrow
-   * @returns {boolean} True if can show Right Arrow
-   */
-  public showRightArrow(): boolean {
-    // Get current generation info
-    const gen = this.pokemonService.getCurrentGeneration();
-    return this.pokemon.id < gen.offset + gen.limit;
-  }
-
-  /**
-   * Check if can show Left Arrow
-   * @returns {boolean} True if can show Left Arrow
-   */
-  public showLeftArrow(): boolean {
-    // Get current generation info
-    const gen = this.pokemonService.getCurrentGeneration();
-    return this.pokemon.id > gen.offset + 1;
   }
 
   /**

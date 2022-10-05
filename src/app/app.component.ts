@@ -113,6 +113,9 @@ export class AppComponent implements OnInit {
         this.filteredPokemons = this.filteredPokemons.sort((a, b) => a.id - b.id);
         break;
     }
+    // Move scroll to top
+    const listElement = document.getElementById('cardList');
+    if (listElement) listElement.scrollTop = 0;
   }
 
   /**
@@ -146,24 +149,46 @@ export class AppComponent implements OnInit {
    * Update Selected Pokemon
    * @param {number | undefined} pokemonId Pokemon id
    */
-  public updateSelectedPokemon(pokemonId: number | undefined): void {
-    // Get current generation info
-    const gen = this.pokemonService.getCurrentGeneration();
+  public updateSelectedPokemon(pokemonId: 'next' | 'previous' | undefined): void {
+    // Init flag
+    let pokemonPosition = 0;
 
     switch (true) {
+      // Clear selected pokemon
       case pokemonId == undefined:
         this.selectPokemon(undefined);
         break;
-      case pokemonId! > gen.offset + gen.limit:
-        this.selectedPokemon = this.pokemons.find(value => value.id == 1);
+      // Go to previous pokemon
+      case pokemonId == 'previous':
+        pokemonPosition = this.filteredPokemons.findIndex(pokemon => pokemon.id == this.selectedPokemon!.id);
+        this.selectedPokemon = this.filteredPokemons[pokemonPosition - 1];
         break;
-      case pokemonId! == gen.offset:
-        this.selectedPokemon = this.pokemons.find(value => value.id == gen.offset);
-        break;
-      default:
-        this.selectedPokemon = this.pokemons.find(value => value.id == pokemonId)
+      // Go to next pokemon
+      case pokemonId == 'next':
+        pokemonPosition = this.filteredPokemons.findIndex(pokemon => pokemon.id == this.selectedPokemon!.id);
+        this.selectedPokemon = this.filteredPokemons[pokemonPosition + 1];
         break;
     }
+  }
+
+  /**
+   * Check if can show Right Arrow
+   * @returns {boolean} True if can show Right Arrow
+   */
+  public showRightArrow(): boolean {
+    if (!this.selectedPokemon) return false;
+    const pokemonPosition = this.filteredPokemons.findIndex(value => value.id == this.selectedPokemon!.id);
+    return pokemonPosition !== this.filteredPokemons.length - 1;
+  }
+
+  /**
+   * Check if can show Left Arrow
+   * @returns {boolean} True if can show Left Arrow
+   */
+  public showLeftArrow(): boolean {
+    if (!this.selectedPokemon) return false;
+    const pokemonPosition = this.filteredPokemons.findIndex(value => value.id == this.selectedPokemon!.id);
+    return pokemonPosition !== 0;
   }
 
   /**

@@ -2,7 +2,8 @@
 
   <div class="pokedex-container" [class.has-selected-pokemon]="selectedPokemon">
     <select name="Generation" #selectGen (change)="onChangeGen(+selectGen.value)">
-      <option *ngFor="let gen of generationsOptions" [value]="gen.id" [selected]="gen.id == defaultGen">{{gen.name}}</option>
+      <option *ngFor="let gen of generationsOptions" [value]="gen.id" [selected]="gen.id == defaultGen">{{gen.name}}
+      </option>
     </select>
 
     <!-- Header -->
@@ -47,7 +48,9 @@
   </div>
 
   <aside *ngIf="selectedPokemon && showPokemonDetails" [@slideInOut]>
-    <app-details [pokemon]="selectedPokemon" (updateSelectedPokemon)="updateSelectedPokemon($event)"></app-details>
+    <app-details [showRightArrow]="showRightArrow()" [showLeftArrow]="showLeftArrow()"
+      (updateSelectedPokemon)="updateSelectedPokemon($event)" [pokemon]="selectedPokemon">
+    </app-details>
   </aside>
 
 </main>
