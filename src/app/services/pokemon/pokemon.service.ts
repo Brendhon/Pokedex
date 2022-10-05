@@ -254,6 +254,6 @@ export class PokemonService {
    * @returns {string} Card id
    */
   public getCardId(pokemon: Pokemon): string {
-    return 'card-' + pokemon.name;
+    return 'card-' + pokemon?.name;
   }
 }

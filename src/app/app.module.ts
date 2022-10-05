@@ -11,6 +11,8 @@ import { PokemonWeightPipe } from './pipes/pokemon-weight/pokemon-weight.pipe';
 import { PokemonHeightPipe } from './pipes/pokemon-height/pokemon-height.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,13 @@ import { LayoutModule } from '@angular/cdk/layout';
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    LayoutModule
+    LayoutModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
