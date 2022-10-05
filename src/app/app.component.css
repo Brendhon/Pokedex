@@ -86,7 +86,7 @@ select {
 }
 
 /* START Responsiveness */
-@media only screen and (max-width: 1050px) {
+@media only screen and (max-width: 900px) {
   .has-selected-pokemon {
     display: none;
   }

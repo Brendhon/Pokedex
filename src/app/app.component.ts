@@ -130,7 +130,7 @@ export class AppComponent implements OnInit {
    * @returns {boolean} True if is mobile
    */
   private isMobileView(): boolean {
-    return this.breakpointObserver.isMatched('(max-width: 950px)');
+    return this.breakpointObserver.isMatched('(max-width: 900px)');
   }
 
   /**

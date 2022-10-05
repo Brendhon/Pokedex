@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "deploy": "ng build && firebase deploy",
-    "start-pwa": "ng build && http-server -p 8080 -c-1 dist/pokedex",
+    "start-pwa": "ng build && http-server -p 8081 -c-1 dist/pokedex",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
