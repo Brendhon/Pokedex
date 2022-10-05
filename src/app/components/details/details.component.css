@@ -51,6 +51,29 @@ header span {
   font-size: smaller;
 }
 
+header div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  z-index: 1000;
+}
+
+.share-button {
+  opacity: 0.6;
+  margin-top: 5px;
+  background-image: url('/assets/icons/share.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.share-button:hover {
+  opacity: 1;
+}
+
 header img {
   cursor: pointer;
   display: none;

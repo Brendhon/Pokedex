@@ -2,7 +2,10 @@
   <header>
     <img src="assets/icons/left-arrow-white.svg" alt="Go back" (click)="clearSelection()">
     <h1 class="pokemon-name">{{pokemon.name}}</h1>
-    <span>{{pokemon.number}}</span>
+    <div>
+      <span>{{pokemon.number}}</span>
+      <span class="share-button" *ngIf="!disableDownload" (click)="downloadPokemonCard()"></span>
+    </div>
   </header>
 
   <div class="pokemon-details">

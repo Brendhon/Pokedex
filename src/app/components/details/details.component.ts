@@ -2,6 +2,7 @@ import { Input, OnChanges, SimpleChanges } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Output } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
+import html2canvas from 'html2canvas';
 import { Pokemon } from 'src/app/models';
 import { PokemonService } from 'src/app/services/pokemon/pokemon.service';
 
@@ -12,6 +13,7 @@ import { PokemonService } from 'src/app/services/pokemon/pokemon.service';
 })
 export class DetailsComponent implements OnInit, OnChanges {
   @Input() pokemon!: Pokemon;
+  @Input() disableDownload = false;
   @Output() updateSelectedPokemon: EventEmitter<number | undefined> = new EventEmitter<number | undefined>();
 
   // Local attr
@@ -123,5 +125,53 @@ export class DetailsComponent implements OnInit, OnChanges {
     // Get current generation info
     const gen = this.pokemonService.getCurrentGeneration();
     return this.pokemon.id > gen.offset + 1;
+  }
+
+  /**
+   * Download Pokemon Card
+   */
+  public async downloadPokemonCard(): Promise<void> {
+    // Disable download option
+    this.disableDownload = true;
+
+    // Get card element
+    const element = document.getElementById("pokemonDetails")!;
+
+    // Get canvas from element
+    const canvas = await html2canvas(element)
+
+    // Enable download option
+    this.disableDownload = false;
+
+    // Convert the canvas to blob
+    canvas.toBlob(async (blob) => {
+      // Get pokemon name
+      const pokemonName = this.pokemon.name[0].toUpperCase() + this.pokemon.name.substring(1);
+
+      // Get file name
+      const fileName = `${pokemonName}.png`;
+
+      // Get file
+      const files = [new File([blob!], fileName, { type: blob!.type })]
+
+      // Form share data
+      const shareData = {
+        text: `It's so beautiful 😍`,
+        title: pokemonName,
+        files,
+      }
+
+      // Try share if fail download img
+      try {
+        // Shared data
+        await navigator.share(shareData)
+      } catch (err) {
+        // To download directly on browser default 'downloads' location
+        const link = document.createElement("a");
+        link.download = fileName;
+        link.href = URL.createObjectURL(blob!);
+        link.click();
+      }
+    }, 'image/png');
   }
 }
