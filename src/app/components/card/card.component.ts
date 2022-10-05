@@ -2,7 +2,6 @@ import { Input } from '@angular/core';
 import { AfterViewInit } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { Pokemon } from 'src/app/models';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { PokemonService } from 'src/app/services/pokemon/pokemon.service';
 
 @Component({
@@ -12,10 +11,8 @@ import { PokemonService } from 'src/app/services/pokemon/pokemon.service';
 })
 export class CardComponent implements OnInit, AfterViewInit {
   @Input() pokemon!: Pokemon;
-  constructor(
-    private pokeapiService: PokemonService,
-    private sanitizer: DomSanitizer
-  ) { }
+
+  constructor(private pokeapiService: PokemonService) { }
 
   ngOnInit(): void { }
 
@@ -45,14 +42,5 @@ export class CardComponent implements OnInit, AfterViewInit {
     // Set CSS variable
     style.setProperty('--primary-color', primary);
     style.setProperty('--secondary-color', secondary ?? primary);
-  }
-
-  /**
-   * Get img url
-   * @param {Blob} img Blob
-   * @returns {SafeResourceUrl} Safe Resource Url
-   */
-  public getImgUrl(img: Blob): SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(img))
   }
 }

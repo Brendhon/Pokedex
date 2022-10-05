@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { BlobToUrlPipe } from './pipes/blob-to-url/blob-to-url.pipe';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { environment } from '../environments/environment';
     DetailsComponent,
     PokemonWeightPipe,
     PokemonHeightPipe,
+    BlobToUrlPipe,
   ],
   imports: [
     CommonModule,

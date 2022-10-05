@@ -8,7 +8,7 @@
   <div class="pokemon-details">
     <!-- Pokemon img -->
     <article class="pokemon-photo">
-      <img [src]="getImgUrl(pokemon.img)" [alt]="pokemon.name">
+      <img [src]="pokemon.img | blobToUrl" [alt]="pokemon.name">
     </article>
 
     <!-- Arrow buttons to go next and previous pokemon -->

@@ -3,7 +3,6 @@ import { EventEmitter } from '@angular/core';
 import { Output } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { Pokemon } from 'src/app/models';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { PokemonService } from 'src/app/services/pokemon/pokemon.service';
 
 @Component({
@@ -18,10 +17,7 @@ export class DetailsComponent implements OnInit, OnChanges {
   // Local attr
   public statusOptions = ["hp", "atk", "def", "satk", "sdef", "spd"];
 
-  constructor(
-    private pokemonService: PokemonService,
-    private sanitizer: DomSanitizer
-  ) { }
+  constructor(private pokemonService: PokemonService) { }
 
   ngOnInit(): void {
     this.setCardColors()
@@ -127,14 +123,5 @@ export class DetailsComponent implements OnInit, OnChanges {
     // Get current generation info
     const gen = this.pokemonService.getCurrentGeneration();
     return this.pokemon.id > gen.offset + 1;
-  }
-
-  /**
-   * Get img url
-   * @param {Blob} img Blob
-   * @returns {SafeResourceUrl} Safe Resource Url
-   */
-   public getImgUrl(img: Blob): SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(img))
   }
 }
