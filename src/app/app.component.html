@@ -24,7 +24,10 @@
           </container-element>
         </span>
       </div>
-      <input [formControl]="search" type="text" placeholder="Search">
+      <div class="input-search">
+        <input [formControl]="search" type="text" placeholder="Search">
+        <img src="assets/icons/close.svg" alt="bottom-arrow" width="15" (click)="clearInput()" *ngIf="hasSearch">
+      </div>
     </header>
 
     <!-- Card list -->

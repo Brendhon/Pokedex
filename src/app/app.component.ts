@@ -29,6 +29,7 @@ import { PokemonService } from './services/pokemon/pokemon.service';
 export class AppComponent implements OnInit {
   public title = 'Pokédex';
   public search = new FormControl(''); // From input
+  public hasSearch = false; // Flag to verify if has some search
   public pokemons: Pokemon[] = []; // List with all Pokemons
   public filteredPokemons: Pokemon[] = [] // List with filtered Pokemons
   public isListEmpty = false;
@@ -86,16 +87,23 @@ export class AppComponent implements OnInit {
       .subscribe(value => {
         // Get term search
         const searchTerm = value?.trim().toLowerCase() ?? '';
-        const hasValue = !!searchTerm; // Check if exist text
+        this.hasSearch = !!searchTerm; // Check if exist text
 
         // Update pokemon list
-        this.filteredPokemons = hasValue
+        this.filteredPokemons = this.hasSearch
           ? this.pokemons.filter(pokemon => pokemon.name.toLowerCase().includes(searchTerm))
           : this.pokemons;
 
         // Check if list is empty
         this.isListEmpty = this.filteredPokemons.length === 0;
       })
+  }
+
+  /**
+   * Clear Input
+   */
+  public clearInput(): void {
+    this.search.reset();
   }
 
   /**

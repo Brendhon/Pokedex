@@ -15,7 +15,7 @@ main {
 }
 
 app-card {
-  transition: all .05s ease-in-out;
+  transition: all 0.05s ease-in-out;
 }
 app-card:hover {
   transform: scale(1.05);
@@ -51,7 +51,7 @@ header div:first-child {
   justify-content: space-between;
 }
 
-input,
+.input-search,
 select {
   width: 100%;
   max-width: 1000px;
@@ -59,6 +59,30 @@ select {
   padding: 6px 16px 6px 16px;
   height: 40px;
   border-radius: 8px;
+}
+
+.input-search {
+  border: 2px solid var(--light-gray-color);
+  padding-left: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--white-color);
+}
+
+.input-search img:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.input-search input {
+  border: hidden;
+  background-color: transparent;
+  width: 100%;
+  background: url('/assets/icons/search.svg') no-repeat scroll 7px 7px;
+  background-size: 12px;
+  padding-left: 30px;
+  height: 28px;
 }
 
 select {
