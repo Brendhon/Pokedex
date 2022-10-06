@@ -6,7 +6,7 @@
 
 ## ❓ Sobre o projeto
 
-PWA desenvolvida com base nas primeiras gerações. Foi utilizado a API do **[PokeApi](https://pokeapi.co/)** para a coleta de dados e o Firebase pera realizar o **[deploy](https://pokedex-eb73a.web.app/)** da aplicação. Além disso, o Dexie foi utilizado para armazenar os dados dentro do **IndexedDB**.
+PWA desenvolvida com base nas primeiras gerações de Pokemons. Foi utilizado a API do **[PokeApi](https://pokeapi.co/)** para a coleta de dados e o Firebase pera realizar o **[deploy](https://pokedex-eb73a.web.app/)** da aplicação. Além disso, o Dexie foi utilizado para armazenar os dados dentro do **IndexedDB**.
 
 Essa aplicação foi utilizada também como trabalho final da disciplina DM122 (Desenvolvimento híbrido de aplicativos móveis) na **Pós em Dispositivos Móveis e Computação em Nuvem** pelo **[INATEL](https://inatel.br/home/)**.
 
