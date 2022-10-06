@@ -27,7 +27,7 @@
                 <mat-icon>star</mat-icon>
                 <span>Favorites</span>
               </button>
-              <button mat-menu-item (click)="updateFilter('unfavorite')"
+              <button mat-menu-item (click)="updateFilter('unfavorite')" *ngIf="false"
                 [style.background-color]="isFavorite == 0 ? 'var(--light-gray-color)' : 'white'">
                 <mat-icon>star_border</mat-icon>
                 <span>Unfavorite</span>
@@ -76,8 +76,8 @@
   </div>
 
   <aside *ngIf="selectedPokemon && showPokemonDetails" [@slideInOut]>
-    <app-details [showRightArrow]="showRightArrow()" [showLeftArrow]="showLeftArrow()"
-      (updateSelectedPokemon)="updateSelectedPokemon($event)" [pokemon]="selectedPokemon">
+    <app-details (favorite)="favoriteChanges($event)" (updateSelectedPokemon)="updateSelectedPokemon($event)"
+      [showRightArrow]="showRightArrow()" [showLeftArrow]="showLeftArrow()" [pokemon]="selectedPokemon">
     </app-details>
   </aside>
 

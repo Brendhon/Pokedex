@@ -17,6 +17,7 @@ export class DetailsComponent implements OnInit, OnChanges {
   @Input() showRightArrow = true;
   @Input() showLeftArrow = true;
   @Output() updateSelectedPokemon: EventEmitter<'next' | 'previous' | undefined> = new EventEmitter<'next' | 'previous' | undefined>();
+  @Output() favorite: EventEmitter<Pokemon> = new EventEmitter<Pokemon>();
 
   // Local attr
   public statusOptions = ["hp", "atk", "def", "satk", "sdef", "spd"];
@@ -123,6 +124,9 @@ export class DetailsComponent implements OnInit, OnChanges {
     isFavorite == 1
       ? this.db.unfavoritePokemon(id)
       : this.db.favoritePokemon(this.pokemon);
+
+    // Emit favorite event
+    this.favorite?.emit(this.pokemon);
 
     // Update pokemon info
     this.db.updateFavoritePokemon(id, this.pokemon.isFavorite)

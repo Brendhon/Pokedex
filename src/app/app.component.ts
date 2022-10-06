@@ -82,6 +82,7 @@ export class AppComponent implements OnInit {
       .then(value => {
         this.isLoading = false;
         this.setPokemonList(value);
+        this.scrollToTop();
       })
   }
 
@@ -111,6 +112,19 @@ export class AppComponent implements OnInit {
    */
   public clearInput(): void {
     this.search.reset();
+  }
+
+  /**
+   * Favorite Changes
+   * @param {Pokemon} pokemon Pokemon data
+   */
+  public favoriteChanges(pokemon: Pokemon): void {
+    // Check if has some change in atribute
+    if (this.isFavorite == undefined || this.isFavorite == pokemon.isFavorite) return;
+    else this.filteredPokemons = this.filteredPokemons.filter(value => value.id !== pokemon.id);
+
+    // Check if list is empty
+    this.isListEmpty = this.filteredPokemons.length === 0;
   }
 
   /**
@@ -150,8 +164,7 @@ export class AppComponent implements OnInit {
         break;
     }
     // Move scroll to top
-    const listElement = document.getElementById('cardList');
-    if (listElement) listElement.scrollTop = 0;
+    this.scrollToTop();
   }
 
   /**
@@ -279,5 +292,13 @@ export class AppComponent implements OnInit {
       if (listElement && cardElement)
         listElement.scrollTop = cardElement.offsetTop - cardElement.offsetHeight - 20;
     })
+  }
+
+  /**
+   * Scroll To Top
+   */
+  public scrollToTop(): void {
+    const listElement = document.getElementById('cardList');
+    if (listElement) listElement.scrollTop = 0;
   }
 }
