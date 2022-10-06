@@ -163,9 +163,6 @@ header img {
   font-size: 23px;
   cursor: pointer;
 }
-.favorite-pokemon:hover {
-  color: yellow !important;
-}
 
 /* END Pokemon details */
 
