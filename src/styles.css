@@ -49,6 +49,21 @@ select:focus {
 }
 /* END - INPUT DEFAULT STYLES */
 
+/* START - SNACK BAR STYLES */
+.snack-bar {
+  color: var(--dark-grey-color);
+  background: url('/assets/imgs/pokeball-logo.svg') no-repeat scroll 7px 16px;
+  background-color: var(--light-gray-color);
+  background-size: 15px;
+}
+.snack-bar button {
+  color: var(--medium-gray-color);
+}
+.snack-bar simple-snack-bar {
+  padding-left: 15px !important;
+}
+/* END - SNACK BAR STYLES */
+
 /* START - SCROLL DEFAULT STYLES */
 /* width */
 ::-webkit-scrollbar {

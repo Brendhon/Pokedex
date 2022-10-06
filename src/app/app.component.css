@@ -94,6 +94,7 @@ select {
   grid-template-columns: repeat(auto-fill, var(--card-width));
   gap: 10px;
   justify-content: center;
+  align-items: center;
 }
 
 .empty-list {
@@ -102,7 +103,14 @@ select {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  text-align: center;
+  gap: 20px;
 }
+
+.empty-list h2 {
+  font-size: large;
+}
+
 
 .has-selected-pokemon {
   display: block;

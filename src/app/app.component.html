@@ -63,7 +63,7 @@
 
     <!-- Empty list feedback -->
     <div class="empty-list" *ngIf="isListEmpty">
-      <img src="assets/imgs/sad.svg" alt="Empty list" width="300">
+      <img src="assets/imgs/no-found.png" alt="Empty list" width="300">
       <h2>No Pokémon of this generation have been found.</h2>
     </div>
 
@@ -76,7 +76,7 @@
   </div>
 
   <aside *ngIf="selectedPokemon && showPokemonDetails" [@slideInOut]>
-    <app-details (favorite)="favoriteChanges($event)" (updateSelectedPokemon)="updateSelectedPokemon($event)"
+    <app-details (favorite)="favoriteStatusChanges($event)" (updateSelectedPokemon)="updateSelectedPokemon($event)"
       [showRightArrow]="showRightArrow()" [showLeftArrow]="showLeftArrow()" [pokemon]="selectedPokemon">
     </app-details>
   </aside>

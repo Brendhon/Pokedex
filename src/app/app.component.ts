@@ -118,10 +118,13 @@ export class AppComponent implements OnInit {
    * Favorite Changes
    * @param {Pokemon} pokemon Pokemon data
    */
-  public favoriteChanges(pokemon: Pokemon): void {
+  public favoriteStatusChanges(pokemon: Pokemon): void {
     // Check if has some change in atribute
     if (this.isFavorite == undefined || this.isFavorite == pokemon.isFavorite) return;
-    else this.filteredPokemons = this.filteredPokemons.filter(value => value.id !== pokemon.id);
+    else {
+      this.filteredPokemons = this.filteredPokemons.filter(value => value.id !== pokemon.id)
+      this.selectedPokemon = undefined;
+    };
 
     // Check if list is empty
     this.isListEmpty = this.filteredPokemons.length === 0;

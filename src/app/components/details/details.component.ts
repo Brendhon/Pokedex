@@ -5,6 +5,8 @@ import { Component, OnInit } from '@angular/core';
 import html2canvas from 'html2canvas';
 import { Pokemon } from 'src/app/models';
 import { DbService } from 'src/app/services/db/db.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-details',
@@ -22,7 +24,7 @@ export class DetailsComponent implements OnInit, OnChanges {
   // Local attr
   public statusOptions = ["hp", "atk", "def", "satk", "sdef", "spd"];
 
-  constructor(private db: DbService) { }
+  constructor(private db: DbService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.setCardColors()
@@ -130,6 +132,13 @@ export class DetailsComponent implements OnInit, OnChanges {
 
     // Update pokemon info
     this.db.updateFavoritePokemon(id, this.pokemon.isFavorite)
+
+    // Notifier user
+    const message = isFavorite == 0 ? 'Favorite' : 'Unfavorite'; // Get message
+    this.snackBar.open(message, 'OK', {
+      duration: 3000,
+      panelClass: 'snack-bar'
+    });
   }
 
   /**
