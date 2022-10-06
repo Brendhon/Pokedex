@@ -48,8 +48,12 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getPokemonList(); // Get pokemon list
-    this.searchSub(); // Listen to research
+    this.db.openDB()
+      .then(() => {
+        this.getPokemonList(); // Get pokemon list
+        this.searchSub(); // Listen to research
+      })
+      .catch(error => console.log(error))
   }
 
   /**
@@ -65,17 +69,15 @@ export class AppComponent implements OnInit {
     // Check if data already exist
     if (!await this.db.hasPokemonList(genId)) {
       this.isLoading = true; // Show loading
-      this.pokemonService.fetchPokemonList(genId); // Make request to get the data if they do not exist
+      await this.pokemonService.fetchPokemonList(genId); // Make request to get the data if they do not exist
     }
 
-    // Subscribe to listening change of
-    const sub = this.db.getPokemonByGeneration(genId).subscribe(value => {
-      if (value.length > 0) {
+    // Get pokemon data
+    this.db.getPokemonByGen(genId)
+      .then(value => {
         this.isLoading = false;
-        sub.unsubscribe();
-        this.setPokemonList(value)
-      }
-    })
+        this.setPokemonList(value);
+      })
   }
 
   /**

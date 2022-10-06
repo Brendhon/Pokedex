@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DEFAULT_GENERATION, POKEMON_GENERATIONS } from 'src/app/constants/pokemon';
 import { Generation, Pokemon, PokemonSpecies, Results, SearchResult, Status } from 'src/app/models';
+import { environment } from 'src/environments/environment';
 import { DbService } from '../db/db.service';
 
 @Injectable({
@@ -8,7 +9,7 @@ import { DbService } from '../db/db.service';
 })
 export class PokemonService {
   // Pokeapi URL
-  private url = 'https://pokeapi.co/api/v2';
+  private url = environment.pokeApiUrl;
   private currentGeneration!: Generation;
 
   constructor(private db: DbService) {
@@ -28,7 +29,7 @@ export class PokemonService {
     const path = `${this.url}/pokemon?offset=${gen.offset}&limit=${gen.limit}`
 
     // If no exist data on storage fetch data from endpoint
-    fetch(path)
+    return fetch(path)
       .then(resp => resp.json()) // parse to json
       .then((resp: SearchResult) => this.fetchPokemonDataByList(resp.results)) // Get pokemon info
   }
@@ -49,7 +50,7 @@ export class PokemonService {
     }
 
     // Execute all promises
-    Promise.allSettled(promises).then((results: PromiseSettledResult<Pokemon>[]) => {
+    return Promise.allSettled(promises).then((results: PromiseSettledResult<Pokemon>[]) => {
       // Get all pokemons that has some value
       const pokemons: Pokemon[] = results
         .filter(result => result.status == 'fulfilled')

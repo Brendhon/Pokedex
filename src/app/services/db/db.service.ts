@@ -15,9 +15,14 @@ export class DbService extends Dexie {
     this.version(environment.dbVersion).stores({
       pokemon: 'id, gen'
     });
+  }
 
-    // Opening the database
-    this.open().catch(err => console.log(err.message));
+  /**
+   * Opening the database
+   * @returns {Promise}
+   */
+  public openDB(): Promise<any> {
+    return this.open();
   }
 
   /**
@@ -35,8 +40,8 @@ export class DbService extends Dexie {
    * @param {number} genId Generation id
    * @returns {Promise<Pokemon[]>} Pokemon list
    */
-  public getPokemonByGeneration(genId: number = DEFAULT_GENERATION): Observable<Pokemon[]> {
-    return liveQuery(() => this.pokemon.where({ gen: genId }).toArray());
+  public getPokemonByGen(genId: number = DEFAULT_GENERATION): Promise<Pokemon[]> {
+    return this.pokemon.where({ gen: genId }).toArray()
   }
 
   /**
