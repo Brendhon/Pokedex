@@ -134,7 +134,7 @@ export class DetailsComponent implements OnInit, OnChanges {
     this.db.updateFavoritePokemon(id, this.pokemon.isFavorite)
 
     // Notifier user
-    const message = isFavorite == 0 ? 'Favorite' : 'Unfavorite'; // Get message
+    const message = isFavorite == 0 ? 'Pokemon added to favorites' : 'Pokemon removed from favorites'; // Get message
     this.snackBar.open(message, 'OK', {
       duration: 3000,
       panelClass: 'snack-bar'
