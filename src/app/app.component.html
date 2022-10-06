@@ -13,16 +13,39 @@
           <img src="assets/icons/pokeball.svg" alt="Pokebola" width="50">
           <h1>Pokédex</h1>
         </span>
-        <span class="flex" style="cursor: pointer;" (click)="toggleListOrder()">
-          <container-element [ngSwitch]="listOrder">
-            <div *ngSwitchCase="listOrderOptions.NORMAL">
-              <img src="assets/icons/normal-order.svg" alt="bottom-arrow" width="35">
-            </div>
-            <div *ngSwitchCase="listOrderOptions.ASC">
-              <img src="assets/icons/asc-order.svg" alt="bottom-arrow" width="35">
-            </div>
-          </container-element>
-        </span>
+        <div class="flex">
+          <!-- If is favorite -->
+          <span class="flex" style="cursor: pointer;">
+            <mat-icon style="font-size: 25px; margin-right: 10px;" [matMenuTriggerFor]="menu">filter_list</mat-icon>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="updateFilter('clear')">
+                <mat-icon>clear_all</mat-icon>
+                <span>Clear filter</span>
+              </button>
+              <button mat-menu-item (click)="updateFilter('favorite')">
+                <mat-icon>star</mat-icon>
+                <span>Favorites</span>
+              </button>
+              <button mat-menu-item (click)="updateFilter('unfavorite')">
+                <mat-icon>star_border</mat-icon>
+                <span>Unfavorite</span>
+              </button>
+            </mat-menu>
+          </span>
+
+          <!-- Toggle list order -->
+          <span class="flex" style="cursor: pointer;" (click)="toggleListOrder()">
+            <container-element [ngSwitch]="listOrder">
+              <div *ngSwitchCase="listOrderOptions.NORMAL">
+                <img src="assets/icons/normal-order.svg" alt="bottom-arrow" width="30">
+              </div>
+              <div *ngSwitchCase="listOrderOptions.ASC">
+                <img src="assets/icons/asc-order.svg" alt="bottom-arrow" width="30">
+              </div>
+            </container-element>
+          </span>
+
+        </div>
       </div>
       <div class="input-search">
         <input [formControl]="search" type="text" placeholder="Search">

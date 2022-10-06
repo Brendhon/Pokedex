@@ -14,7 +14,7 @@ export class DbService extends Dexie {
   constructor() {
     super(POKEMON_DB);
     this.version(environment.dbVersion).stores({
-      pokemon: 'id, gen',
+      pokemon: 'id, gen, [gen+isFavorite]',
       favorites: 'id, gen',
     });
   }
@@ -23,7 +23,7 @@ export class DbService extends Dexie {
    * Opening the database
    * @returns {Promise}
    */
-  public async openDB(): Promise<any>  {
+  public async openDB(): Promise<any> {
     // Get version
     const version = environment.dbVersion;
 
@@ -71,10 +71,13 @@ export class DbService extends Dexie {
   /**
    * Get Pokemon By Generation
    * @param {number} genId Generation id
+   * @param {(0 | 1)} isFavorite is favorite
    * @returns {Promise<Pokemon[]>} Pokemon list
    */
-  public getPokemonByGen(genId: number = DEFAULT_GENERATION): Promise<Pokemon[]> {
-    return this.pokemon.where({ gen: genId }).toArray()
+  public getPokemonByGen(genId: number = DEFAULT_GENERATION, isFavorite?: (0 | 1)): Promise<Pokemon[]> {
+    return isFavorite !== undefined
+      ? this.pokemon.where({ gen: genId, isFavorite: isFavorite }).toArray()
+      : this.pokemon.where({ gen: genId }).toArray()
   }
 
   /**
@@ -89,8 +92,9 @@ export class DbService extends Dexie {
   /**
    * Update Favorite Pokemon
    * @param {number} pokemonId
+   * @param {(0 | 1)} isFavorite is favorite
    */
-  public async updateFavoritePokemon(pokemonId: number, isFavorite: boolean): Promise<void> {
+  public async updateFavoritePokemon(pokemonId: number, isFavorite: (0 | 1)): Promise<void> {
     this.pokemon
       .update(pokemonId, { isFavorite: isFavorite })
       .catch(err => console.log(err.message));

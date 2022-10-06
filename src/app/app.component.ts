@@ -40,6 +40,8 @@ export class AppComponent implements OnInit {
   public selectedPokemon: Pokemon | undefined;
   public isLoading: boolean = false;
   public showPokemonDetails: boolean = false;
+  public isFavorite: (0 | 1 | undefined) = undefined;
+  public openFilter: boolean = false;
 
   constructor(
     private pokemonService: PokemonService,
@@ -63,6 +65,9 @@ export class AppComponent implements OnInit {
     // Remove filtered pokemons
     this.filteredPokemons = [];
 
+    // Clear filter
+    this.clearInput();
+
     // Get current generation
     const genId = this.pokemonService.getCurrentGeneration().id;
 
@@ -73,7 +78,7 @@ export class AppComponent implements OnInit {
     }
 
     // Get pokemon data
-    this.db.getPokemonByGen(genId)
+    this.db.getPokemonByGen(genId, this.isFavorite)
       .then(value => {
         this.isLoading = false;
         this.setPokemonList(value);
@@ -106,6 +111,27 @@ export class AppComponent implements OnInit {
    */
   public clearInput(): void {
     this.search.reset();
+  }
+
+  /**
+   * Update Filter
+   * @param { 'clear' | 'favorite' | 'unfavorite'} action Filter action
+   */
+  public updateFilter(action: 'clear' | 'favorite' | 'unfavorite'): void {
+    // Check action
+    switch (action) {
+      case 'favorite':
+        this.isFavorite = 1;
+        break;
+      case 'unfavorite':
+        this.isFavorite = 0;
+        break;
+      default:
+        this.isFavorite = undefined;
+        break;
+    }
+    // Get pokemon list
+    this.getPokemonList();
   }
 
   /**
@@ -228,6 +254,9 @@ export class AppComponent implements OnInit {
     // Check if is a mobile view or not
     if (!this.isMobileView())
       this.selectPokemon(pokemons[0]); // Select first pokemon
+
+    // Check if list is empty
+    this.isListEmpty = this.filteredPokemons.length === 0;
   }
 
   /**

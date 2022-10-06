@@ -92,7 +92,7 @@ export class PokemonService {
       isLegendary,
       isBaby,
       isMythical,
-      isFavorite: false,
+      isFavorite: 0,
       height: data.height,
       weight: data.weight,
       number: this.getPokemonNumber(data),

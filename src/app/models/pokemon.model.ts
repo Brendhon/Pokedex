@@ -23,7 +23,7 @@ export interface Pokemon {
   isLegendary: boolean,
   isBaby: boolean,
   isMythical: boolean,
-  isFavorite: boolean;
+  isFavorite: (0 | 1);
   gen: number;
   status: Status;
   colors: string[];

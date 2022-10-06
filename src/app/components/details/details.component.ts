@@ -117,15 +117,15 @@ export class DetailsComponent implements OnInit, OnChanges {
     const { id, isFavorite } = this.pokemon;
 
     // Update local pokemon info
-    this.pokemon.isFavorite = !isFavorite;
+    this.pokemon.isFavorite = isFavorite == 1 ? 0 : 1;
 
     // Check if is favorite
-    isFavorite
+    isFavorite == 1
       ? this.db.unfavoritePokemon(id)
       : this.db.favoritePokemon(this.pokemon);
 
     // Update pokemon info
-    this.db.updateFavoritePokemon(id, !isFavorite)
+    this.db.updateFavoritePokemon(id, this.pokemon.isFavorite)
   }
 
   /**

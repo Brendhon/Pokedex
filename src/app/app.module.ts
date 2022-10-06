@@ -14,6 +14,8 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { BlobToUrlPipe } from './pipes/blob-to-url/blob-to-url.pipe';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { BlobToUrlPipe } from './pipes/blob-to-url/blob-to-url.pipe';
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    MatMenuModule,
+    MatIconModule,
     LayoutModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
