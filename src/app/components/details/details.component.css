@@ -60,7 +60,7 @@ header div {
 }
 
 .share-button {
-  color: var(--medium-gray-color);
+  color: var(--secondary-color);
   z-index: 1000;
   cursor: pointer;
   font-size: x-large;

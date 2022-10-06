@@ -39,6 +39,7 @@ body {
 
   /* Define card properties */
   --card-width: 170px;
+  --card-height: 170px;
 }
 
 /* START - INPUT DEFAULT STYLES */

@@ -293,7 +293,7 @@ export class AppComponent implements OnInit {
 
       // Set scroll position
       if (listElement && cardElement)
-        listElement.scrollTop = cardElement.offsetTop - cardElement.offsetHeight - 20;
+        listElement.scrollTop = cardElement.offsetTop - cardElement.offsetHeight - 30;
     })
   }
 
