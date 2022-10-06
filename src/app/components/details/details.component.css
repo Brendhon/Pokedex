@@ -48,29 +48,26 @@ header:before {
 }
 
 header span {
-  font-size: smaller;
+  font-size: medium;
 }
 
 header div {
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   z-index: 1000;
+  gap: 10px;
 }
 
 .share-button {
-  margin-top: 5px;
-  background-image: url('/assets/icons/share.svg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 20px;
-  height: 20px;
+  color: var(--medium-gray-color);
+  z-index: 1000;
   cursor: pointer;
+  font-size: x-large;
 }
 
 .share-button:hover {
-  opacity: 0.6;
+  color: var(--light-gray-color);
 }
 
 header img {
@@ -163,13 +160,11 @@ header img {
 }
 
 .favorite-pokemon {
-  z-index: 10;
-}
-.favorite-pokemon img {
+  font-size: 23px;
   cursor: pointer;
 }
-.favorite-pokemon img:hover {
-  opacity: 0.6;
+.favorite-pokemon:hover {
+  color: yellow !important;
 }
 
 /* END Pokemon details */
