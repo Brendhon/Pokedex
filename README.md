@@ -6,7 +6,9 @@
 
 ## ❓ Sobre o projeto
 
-Pokédex desenvolvida com base nas primeiras gerações. Foi utilizado a API do **[PokeApi](https://pokeapi.co/)** para a coleta de dados e o Firebase pera realizar o **[deploy](https://pokedex-eb73a.web.app/)** da aplicação.
+PWA desenvolvida com base nas primeiras gerações. Foi utilizado a API do **[PokeApi](https://pokeapi.co/)** para a coleta de dados e o Firebase pera realizar o **[deploy](https://pokedex-eb73a.web.app/)** da aplicação. Além disso, o Dexie foi utilizado para armazenar os dados dentro do **IndexedDB**.
+
+Essa aplicação foi utilizada também como trabalho final da disciplina DM122 (Desenvolvimento híbrido de aplicativos móveis) na **Pós em Dispositivos Móveis e Computação em Nuvem** pelo **[INATEL](https://inatel.br/home/)**.
 
 ---
 
@@ -18,6 +20,8 @@ As seguintes tecnologias foram utilizadas na construção do projeto:
  - **[PokeApi](https://pokeapi.co/)**
  - **[Firebase](https://firebase.google.com/?hl=pt)**
  - **[Google Fonts](https://fonts.google.com/)**
+ - **[Dexie](https://dexie.org/)**
+ - **[PWA](https://angular.io/guide/service-worker-getting-started)**
 
 > Veja o arquivo  **[package.json](https://github.com/Brendhon/Pokedex/blob/main/package.json)**
 
@@ -31,7 +35,7 @@ As seguintes tecnologias foram utilizadas na construção do projeto:
 ### 💡 Pré-requisitos
 
 Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
-**[Git](https://git-scm.com)** e **[Node.js](https://nodejs.org/en/)**.<br> 
+**[Git](https://git-scm.com)**, **[Node.js](https://nodejs.org/en/)** e **[Http Server](https://www.npmjs.com/package/http-server)**.<br> 
 
 ```bash
 
@@ -53,6 +57,17 @@ $ npm run start
 
 # Iniciará na porta:4200
 
+```
+
+---
+### 🖥️📱 Executando PWA no modo desenvolvedor
+
+```bash
+
+# Execute a aplicação
+$ npm run start-pwa
+
+# Iniciará na porta:8081
 ```
 
 ---
