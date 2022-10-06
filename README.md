@@ -22,6 +22,7 @@ As seguintes tecnologias foram utilizadas na construção do projeto:
  - **[Google Fonts](https://fonts.google.com/)**
  - **[Dexie](https://dexie.org/)**
  - **[PWA](https://angular.io/guide/service-worker-getting-started)**
+ - **[Angular Material](https://material.angular.io/)**
 
 > Veja o arquivo  **[package.json](https://github.com/Brendhon/Pokedex/blob/main/package.json)**
 
