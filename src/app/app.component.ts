@@ -240,6 +240,9 @@ export class AppComponent implements OnInit {
 
     // Get pokemon list
     this.getPokemonList();
+
+    // Remove filter
+    this.isFavorite = undefined;
   }
 
   /**

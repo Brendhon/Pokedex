@@ -22,11 +22,13 @@
                 <mat-icon>clear_all</mat-icon>
                 <span>Clear filter</span>
               </button>
-              <button mat-menu-item (click)="updateFilter('favorite')">
+              <button mat-menu-item (click)="updateFilter('favorite')"
+                [style.background-color]="isFavorite == 1 ? 'var(--light-gray-color)' : 'white'">
                 <mat-icon>star</mat-icon>
                 <span>Favorites</span>
               </button>
-              <button mat-menu-item (click)="updateFilter('unfavorite')">
+              <button mat-menu-item (click)="updateFilter('unfavorite')"
+                [style.background-color]="isFavorite == 0 ? 'var(--light-gray-color)' : 'white'">
                 <mat-icon>star_border</mat-icon>
                 <span>Unfavorite</span>
               </button>
