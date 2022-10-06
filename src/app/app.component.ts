@@ -123,7 +123,7 @@ export class AppComponent implements OnInit {
     if (this.isFavorite == undefined || this.isFavorite == pokemon.isFavorite) return;
     else {
       this.filteredPokemons = this.filteredPokemons.filter(value => value.id !== pokemon.id)
-      this.selectedPokemon = undefined;
+      this.selectPokemon(undefined);
     };
 
     // Check if list is empty

@@ -170,7 +170,7 @@ export class DetailsComponent implements OnInit, OnChanges {
 
       // Form share data
       const shareData = {
-        text: `It's so beautiful 😍`,
+        text: pokemonName,
         title: pokemonName,
         files,
       }
