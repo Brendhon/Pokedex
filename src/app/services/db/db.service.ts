@@ -9,11 +9,13 @@ import { Pokemon } from 'src/app/models';
 })
 export class DbService extends Dexie {
   private pokemon!: Table<Pokemon, number>;
+  private favorites!: Table<Pokemon, number>;
 
   constructor() {
     super(POKEMON_DB);
     this.version(environment.dbVersion).stores({
-      pokemon: 'id, gen'
+      pokemon: 'id, gen',
+      favorites: 'id, gen',
     });
   }
 
@@ -21,9 +23,40 @@ export class DbService extends Dexie {
    * Opening the database
    * @returns {Promise}
    */
-  public openDB(): Promise<any> {
-    return this.open();
+  public async openDB(): Promise<any>  {
+    // Get version
+    const version = environment.dbVersion;
+
+    // Check if is already open
+    if (this.isOpen()) return super.open();
+
+    // Open
+    return Dexie.Promise.resolve()
+      .then(() => Dexie.exists(this.name)) // Check if exist
+      .then((exists) => {
+        // No need to check database version since it doesn't exist
+        if (!exists) return;
+
+        // Open separate instance of dexie to get current database version
+        return new Dexie(this.name).open()
+          .then(async db => {
+            // database up to date (or newer)
+            if (db.verno >= version) return db.close();
+
+            console.log(`Database schema out of date, resetting all data. (currentVersion: ${db.verno}, expectedVersion: ${version})`);
+            await db.delete();
+
+            // ensure the delete was successful
+            const exists = await Dexie.exists(this.name);
+            if (exists) {
+              throw new Error('Failed to remove mock backend database.');
+            }
+          })
+      })
+      .then(() => super.open());
   }
+
+  // ------------------- START - POKEMON TABLE -------------------
 
   /**
    * Add pokemon to database
@@ -52,4 +85,45 @@ export class DbService extends Dexie {
   public async hasPokemonList(genId: number = DEFAULT_GENERATION): Promise<boolean> {
     return (await this.pokemon.where({ gen: genId }).count()) > 0;
   }
+
+  /**
+   * Update Favorite Pokemon
+   * @param {number} pokemonId
+   */
+  public async updateFavoritePokemon(pokemonId: number, isFavorite: boolean): Promise<void> {
+    this.pokemon
+      .update(pokemonId, { isFavorite: isFavorite })
+      .catch(err => console.log(err.message));
+  }
+  // ------------------- END - POKEMON TABLE -------------------
+
+  // ------------------- START - FAVORITE TABLE -------------------
+  /**
+   * Add pokemon to database
+   * @param {Pokemon} pokemon
+   */
+  public async favoritePokemon(pokemon: Pokemon): Promise<void> {
+    this.favorites
+      .add(pokemon)
+      .catch(err => console.log(err.message));
+  }
+
+  /**
+   * Delete pokemon from database
+   * @param {number} pokemonId
+   */
+  public async unfavoritePokemon(pokemonId: number): Promise<void> {
+    this.favorites
+      .delete(pokemonId)
+      .catch(err => console.log(err.message));
+  }
+
+  /**
+   * Delete pokemon from database
+   * @returns {Observable<Pokemon[]>} Favorites pokemons
+   */
+  public fetchFavorites(): Observable<Pokemon[]> {
+    return liveQuery(() => this.favorites.toArray());
+  }
+  // ------------------- END - FAVORITE TABLE -------------------
 }

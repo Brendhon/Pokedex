@@ -1,4 +1,4 @@
-<main id="pokemonDetails">
+<main id="pokemonDetails" [class.favorite]="pokemon.isFavorite">
   <header>
     <img src="assets/icons/left-arrow-white.svg" alt="Go back" (click)="clearSelection()">
     <h1 class="pokemon-name">{{pokemon.name}}</h1>
@@ -34,6 +34,12 @@
           <span class="tooltip-text">Mythical</span>
         </div>
       </span>
+
+      <!-- Favorite toggle -->
+      <div class="favorite-pokemon" (click)="toggleFavorite()">
+        <img [src]="pokemon.isFavorite  ? 'assets/imgs/favorite.png' :'assets/imgs/unfavorite.svg' "
+          [alt]="pokemon.isFavorite  ? 'Favorite pokemon' : 'Unfavorite pokemon'" width="25">
+      </div>
     </article>
 
     <!-- Pokemon types -->

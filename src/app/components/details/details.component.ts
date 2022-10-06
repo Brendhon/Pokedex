@@ -4,6 +4,7 @@ import { Output } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import html2canvas from 'html2canvas';
 import { Pokemon } from 'src/app/models';
+import { DbService } from 'src/app/services/db/db.service';
 
 @Component({
   selector: 'app-details',
@@ -20,7 +21,7 @@ export class DetailsComponent implements OnInit, OnChanges {
   // Local attr
   public statusOptions = ["hp", "atk", "def", "satk", "sdef", "spd"];
 
-  constructor() { }
+  constructor(private db: DbService) { }
 
   ngOnInit(): void {
     this.setCardColors()
@@ -106,6 +107,25 @@ export class DetailsComponent implements OnInit, OnChanges {
   public getStatusBarWidth(type: string): string {
     const value = +this.getPokemonStatusByKey(type);
     return `${Math.ceil((value * 100) / 200)}%`;
+  }
+
+  /**
+   * Toggle Favorite
+   */
+  public toggleFavorite(): void {
+    // Get necessary attr
+    const { id, isFavorite } = this.pokemon;
+
+    // Update local pokemon info
+    this.pokemon.isFavorite = !isFavorite;
+
+    // Check if is favorite
+    isFavorite
+      ? this.db.unfavoritePokemon(id)
+      : this.db.favoritePokemon(this.pokemon);
+
+    // Update pokemon info
+    this.db.updateFavoritePokemon(id, !isFavorite)
   }
 
   /**

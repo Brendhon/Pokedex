@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  dbVersion: 1,
+  dbVersion: 2,
   pokeApiUrl: 'https://pokeapi.co/api/v2'
 };
 

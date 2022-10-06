@@ -79,14 +79,13 @@ header img {
 }
 /* END Header */
 
-/* START Legendary */
-.legendary {
-  display:inline-block;
+/* START favorite */
+.favorite {
   -webkit-mask:linear-gradient(-60deg,#000 30%,#0005,#000 70%) right/500% 100%;
   background-repeat: repeat;
   animation: shimmer 2s infinite;
 }
-/* END Legendary */
+/* END favorite */
 
 @keyframes shimmer {
   100% {-webkit-mask-position:left}
@@ -161,6 +160,16 @@ header img {
 
 .features span {
   font-size: 10px;
+}
+
+.favorite-pokemon {
+  z-index: 10;
+}
+.favorite-pokemon img {
+  cursor: pointer;
+}
+.favorite-pokemon img:hover {
+  opacity: 0.6;
 }
 
 /* END Pokemon details */
