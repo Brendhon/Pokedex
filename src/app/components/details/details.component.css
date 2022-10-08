@@ -331,9 +331,9 @@ h2 {
   }
 
   .pokemon-description {
-    font-size: 10px;
+    font-size: 9px;
     padding: 10px 20px;
-    padding-bottom: 0px;
+    padding-bottom: 0px !important;
   }
 
   .features {
@@ -395,7 +395,9 @@ h2 {
   .pokemon-about {
     gap: 5px;
   }
-
+  .about-content {
+    font-size: 8px;
+  }
   .pokemon-about div article {
     width: 4rem;
   }
