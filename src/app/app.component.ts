@@ -71,10 +71,14 @@ export class AppComponent implements OnInit {
     // Get current generation
     const genId = this.pokemonService.getCurrentGeneration().id;
 
-    // Check if data already exist
-    if (!await this.db.hasPokemonList(genId)) {
-      this.isLoading = true; // Show loading
-      await this.pokemonService.fetchPokemonList(genId); // Make request to get the data if they do not exist
+    try {
+      // Check if data already exist
+      if (!await this.db.hasPokemonList(genId)) {
+        this.isLoading = true; // Show loading
+        await this.pokemonService.fetchPokemonList(genId); // Make request to get the data if they do not exist
+      }
+    } catch (error) {
+      this.isLoading = false; // Show loading
     }
 
     // Get pokemon data

@@ -43,7 +43,7 @@
         "strategy": "performance",
         "maxSize": 50,
         "maxAge": "6h",
-        "timeout": "5s"
+        "timeout": "30s"
       }
     }
   ]
