@@ -73,6 +73,7 @@ header div {
 header img {
   cursor: pointer;
   display: none;
+  margin-top: 5px;
 }
 /* END Header */
 
@@ -294,6 +295,10 @@ h2 {
   header img {
     display: block;
   }
+
+  .pokemon-name {
+    font-size: large;
+  }
 }
 @media only screen and (max-height: 920px) {
   main {
@@ -307,7 +312,7 @@ h2 {
   }
 
   h2 {
-    margin: 10px;
+    margin: 5px;
     font-size: medium;
   }
 
@@ -348,5 +353,81 @@ h2 {
 
   .pokemon-status {
     font-size: smaller;
+  }
+}
+
+@media only screen and (max-height: 600px) {
+  main {
+    --header-height: 110px;
+    height: 500px;
+  }
+
+  .pokemon-photo img {
+    width: 8rem;
+    margin-top: -70px;
+  }
+
+  .pokemon-status {
+    font-size: 10px;
+  }
+
+  .pokemon-description {
+    margin: 0;
+    padding: 10px 8px;
+  }
+
+  h2 {
+    margin: 5px;
+    font-size: 14px;
+  }
+
+  .pokemon-about div article {
+    width: 5rem;
+    height: 60px;
+    padding: 0px;
+  }
+
+  .pokemon-about div article h4 {
+    font-size: 10px;
+  }
+}
+@media only screen and (max-width: 350px) {
+  .pokemon-about {
+    gap: 5px;
+  }
+
+  .pokemon-about div article {
+    width: 4rem;
+  }
+
+  header:before {
+    width: 120px;
+    height: 120px;
+  }
+
+  header {
+    padding: 5px;
+  }
+
+  header div {
+    gap: 5px;
+  }
+
+  header div span {
+    font-size: smaller;
+  }
+
+  header div mat-icon {
+    font-size: medium;
+    margin-top: 5px;
+  }
+
+  header img {
+    width: 15px;
+    height: 15px;
+  }
+
+  .pokemon-name {
+    font-size: medium;
   }
 }
