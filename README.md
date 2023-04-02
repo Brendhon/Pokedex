@@ -85,6 +85,6 @@ Brendhon Moreira
 
 ---
 ## 📝 License
-[![License](https://img.shields.io/apm/l/vim-mode?color=blue)](http://badges.mit-license.org)
+[![License](https://img.shields.io/github/license/Brendhon/Pokedex?style=plastic)](http://badges.mit-license.org)
 
 - **[MIT license](https://choosealicense.com/licenses/mit/)**
